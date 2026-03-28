@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "allowJs": false,
+    "strict": true,
+    "jsx": "react-jsx",
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "bundler",
+    "outDir": "./dist"
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS" // ts-node는 CJS로 실행
+    }
+  }
+}

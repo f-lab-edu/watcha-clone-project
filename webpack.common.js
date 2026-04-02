@@ -1,12 +1,13 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
+const {TsconfigPathsPlugin} =  require('tsconfig-paths-webpack-plugin');
 
 const envPath = `./.env.${process.env.NODE_ENV || 'development'}`;
 const isDev = process.env.NODE_ENV === 'development';
 require('dotenv').config({ path: envPath });
 
-console.log(envPath);
 module.exports = {
   entry: "./src/Main.tsx", // 번들링 시작점
   plugins: [

@@ -19,5 +19,10 @@
       "@useHooks/*": ["src/api/hooks/*"],
       "@assets/*": ["src/assets/*"]
     }
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS" // ts-node는 CJS로 실행
+    }
   }
 }

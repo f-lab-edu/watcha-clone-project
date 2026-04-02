@@ -1,0 +1,8 @@
+{
+  "plugins": ["babel-plugin-react-compiler"],
+  "presets": [
+    "@babel/preset-typescript", // ts -> js 변환
+    ["@babel/preset-react", { "runtime": "automatic" }], // jsx -> js 변환, React 17+에서는 자동으로 React import하여 jsx 변환
+    "@babel/preset-env" // 최신 JS 문법을 구형 브라우저에서도 호환되도록 변환, .browserslistrc 파일 참조하여 지원 브라우저 설정
+  ]
+}

@@ -22,6 +22,14 @@ module.exports = {
     }),
   ].filter(Boolean),
   resolve: {
+    alias: {
+      "@components": path.resolve(__dirname, "src/components"),
+      "@pages": path.resolve(__dirname, "src/pages"),
+      "@useHooks": path.resolve(__dirname, "src/api/hooks"),
+      "@api": path.resolve(__dirname, "src/api"),
+      "@assets": path.resolve(__dirname, "src/assets"),
+    },
+    plugins: [new TsconfigPathsPlugin()], // tsconfig paths 자동 참조
     extensions: [".tsx", ".ts", ".js"], // import 시 확장자 생략 가능하게 tsx,ts,js 순으로
   },
   module: {

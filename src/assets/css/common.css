@@ -379,11 +379,9 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
   margin-bottom: 16px;
 }
 .section-title {
-  font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.3px;
 }
@@ -443,7 +441,7 @@ a {
 .card-poster-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(10, 10, 15, 0.9) 0%, transparent 50%);
+  background: rgba(0, 0, 0, 0.4); /* 균일하게 어둡게 */
   border-radius: 10px;
   opacity: 0;
   transition: opacity 0.2s;
@@ -451,7 +449,7 @@ a {
   align-items: center;
   justify-content: center;
 }
-.card:hover .card-poster-overlay {
+.card-poster-overlay:hover {
   opacity: 1;
 }
 .play-circle {
@@ -491,9 +489,6 @@ a {
   display: flex;
   align-items: flex-end;
   width: 100%;
-}
-.rank-card:hover {
-  
 }
 
 .rank-card img {
@@ -998,10 +993,11 @@ a {
   font-size: 12px;
 }
 
+/* Hero Carousel */
 .hero {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 40vh;
   overflow: hidden;
 }
 
@@ -1022,11 +1018,20 @@ a {
   align-items: flex-end;
   padding: 60px;
   color: white;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
 }
 
 /* 왼쪽 텍스트 */
 .hero-content {
   max-width: 600px;
+  /* background: rgba(201, 201, 201, 0.5) ;
+  border-radius: 10px;
+  padding: 10px; */
 }
 
 .hero-title {
@@ -1049,9 +1054,10 @@ a {
 
 /* 우측 카운터 */
 .hero-counter {
-  font-size: 14px;
+  font-size: 1rem;
 }
 
+/* Swiper */
 .swiper,
 .swiper-wrapper,
 .swiper-slide {
@@ -1083,36 +1089,40 @@ a {
   align-items: center;
   justify-content: center;
 }
-
-
 .carousel-wrapper {
   position: relative;
 }
 
-.prev-btn,
-.next-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.prev-btn {
-  left: 0;
-}
-
-.next-btn {
-  right: 0;
-}
-
-/* hover 시 버튼 등장 */
-.carousel-wrapper:hover .prev-btn,
-.carousel-wrapper:hover .next-btn {
-  opacity: 1;
-}
 .swiper-slide {
   width: calc((100% - 5 * 12px) / 6);
+}
+
+/* Skeleton */
+
+/* shimmer 애니메이션 */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 50%,
+    #1a1a1a 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.skeleton {
+  border-radius: 8px;
+  animation: pulse 1.8s ease-in-out infinite;
 }

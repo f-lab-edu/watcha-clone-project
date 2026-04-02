@@ -11,12 +11,12 @@ type SwiperSectionProps = {
 const SwiperSection = ({children, title}: SwiperSectionProps) => {
    const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const swiperRef = useRef<any>(null);  
+  const swiperRef = useRef<any>(null);
 
   return (
     <div className='carousel-section'>
         <div className='section-header'>
-          <span className='section-title'>{title}</span>
+          <h2 className='section-title'>{title}</h2>
         </div>
         <div className='carousel-wrapper'>
           <Swiper

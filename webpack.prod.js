@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: false,
   output: {
     path: path.resolve(__dirname, "dist"), // 빌드 후 폴더명
     filename: "bundle.js", // 파일명

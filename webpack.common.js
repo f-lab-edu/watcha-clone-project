@@ -8,6 +8,14 @@ module.exports = {
     }), // 해당 템플릿을 기반으로 번들링된 JS 파일을 자동으로 삽입한 HTML 파일 생성하여 dist 폴더에 저장
   ].filter(Boolean),
   resolve: {
+    alias: {
+      "@components": path.resolve(__dirname, "src/components"),
+      "@pages": path.resolve(__dirname, "src/pages"),
+      "@useHooks": path.resolve(__dirname, "src/api/hooks"),
+      "@api": path.resolve(__dirname, "src/api"),
+      "@assets": path.resolve(__dirname, "src/assets"),
+    },
+    plugins: [new TsconfigPathsPlugin()], // tsconfig paths 자동 참조
     extensions: [".tsx", ".ts", ".js"], // import 시 확장자 생략 가능하게 tsx,ts,js 순으로
   },
   module: {

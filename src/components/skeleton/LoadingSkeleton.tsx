@@ -1,8 +1,9 @@
-const ListSkeleton = () => {
+const LoadingSkeleton = () => {
   const shades = ['#181818', '#1e1e1e', '#2a2a2a', '#333', '#3a3a3a', '#424242', '#4a4a4a'];
 
   return (
     <div className='sk-section'>
+      <div className='skeleton' style={{ height: '40vh', width: '100%', marginBottom: 14 }} />
       <div style={{ display: 'flex', gap: 10, overflow: 'hidden' }}>
         {shades.map((bg, i) => (
           <div
@@ -16,4 +17,4 @@ const ListSkeleton = () => {
   );
 };
 
-export default ListSkeleton;
+export default LoadingSkeleton;

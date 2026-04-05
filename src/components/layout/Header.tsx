@@ -18,9 +18,9 @@ const Header = () => {
               aria-hidden='true'>
               <path
                 fill='currentColor'
-                fill-rule='evenodd'
+                fillRule='evenodd'
                 d='M11.17 4.8a6.37 6.37 0 1 1 0 12.74 6.37 6.37 0 0 1 0-12.74m0-1.8a8.17 8.17 0 0 1 6.45 13.18L22 20.56 20.56 22l-4.38-4.38a8.17 8.17 0 1 1-5-14.62'
-                clip-rule='evenodd'></path>
+                clipRule='evenodd'></path>
             </svg>
           </div>
         </Link>

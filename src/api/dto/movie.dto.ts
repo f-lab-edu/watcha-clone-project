@@ -1,4 +1,6 @@
-import { Content, Genre } from "../../types/content";
+import { Credit } from "src/types/credit";
+import { Review } from "src/types/Review";
+import { Content, Genre, ReleaseInfo } from "../../types/content";
 
 export interface MovieListResponse {
   page: number;
@@ -42,4 +44,17 @@ export interface MovieDetailResponse extends Content {
   }[];
   status: string;
   tagline: string;
+  release_dates: {
+    results: {
+      "iso_3166_1": string,
+      "release_dates": ReleaseInfo[]
+    }[]
+  },
+  credits: Credit
+}
+
+export interface MovieReviewListResponse {
+  id: number;
+  page: number;
+  results: Review[]
 }

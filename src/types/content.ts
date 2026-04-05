@@ -19,3 +19,12 @@ export interface Genre {
   id: number;
   name: string;
 }
+
+export interface ReleaseInfo {
+  certification: string,
+  descriptors: string[],
+  'iso_639_1': string,
+  note: string,
+  release_date: string,
+  type: number
+}

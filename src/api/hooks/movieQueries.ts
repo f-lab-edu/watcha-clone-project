@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { SearchRequest } from "../dto/searchRequest";
-import { getGenres, getMovieDetail, getMovieListByGenre, getNowPlaying, getTopRated } from "../movie";
+import { getGenres, getMovieDetail, getMovieListByGenre, getMovieReviews, getNowPlaying, getSimilarMovies, getTopRated } from "../movie";
 
 export const movieQueries = {
   all: () => ['movie'],
@@ -26,7 +26,18 @@ export const movieQueries = {
   }),
   movieDetail: (movieId: number, req: SearchRequest) => queryOptions({
     queryKey: [...movieQueries.details(), movieId, { req }],
-    queryFn: () => getMovieDetail(movieId, req)
+    queryFn: () => getMovieDetail(movieId, req),
+    enabled: movieId > 0
   }),
+  reviews: (movieId: number, req: SearchRequest) => queryOptions({
+    queryKey: [...movieQueries.lists(), 'reviews', movieId, { req }],
+    queryFn: () => getMovieReviews(movieId, req),
+    enabled: movieId > 0
+  }),
+  similar: (movieId: number, req: SearchRequest) => queryOptions({
+    queryKey: [...movieQueries.lists(), 'similar', movieId, { req }],
+    queryFn: () => getSimilarMovies(movieId, req),
+    enabled: movieId > 0
+  })
 
 }

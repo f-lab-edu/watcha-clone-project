@@ -21,7 +21,7 @@ const TopRatedSection = () => {
         <SwiperSection title='오늘의 TOP 10'>
           {contents.map((m, i) => (
             <SwiperSlide key={`swiper-slide-${m.id}`} className='swiper-slide'>
-              <Link to={`/movie/${m.id}`}>
+              <Link to={`/contents/${m.id}`}>
                 <div className='rank-card'>
                   <div className='rank-number'>{i + 1}</div>
                   <CardPoster img={`https://image.tmdb.org/t/p/w342${m.poster_path}`} />

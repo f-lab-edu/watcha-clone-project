@@ -32,7 +32,7 @@ const MovieGenreList = () => {
                     <SwiperSlide
                       key={`swiper-slide-${genres[id].name}-${m.id}`}
                       className='swiper-slide'>
-                      <Link to={`/movie/${m.id}`}>
+                      <Link to={`/contents/${m.id}`}>
                         <CardPoster img={`https://image.tmdb.org/t/p/w342${m.poster_path}`} />
                       </Link>
                     </SwiperSlide>

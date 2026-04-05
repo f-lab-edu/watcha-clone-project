@@ -1,3 +1,5 @@
+import ContentDetail from '@pages/ContentDetail';
+import NotFound from '@pages/NotFound';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import Default from '../components/layout/Default';
@@ -7,7 +9,11 @@ const route = createBrowserRouter([
   {
     path: '/',
     element: <Default />,
-    children: [{ index: true, element: <Home /> }],
+    children: [
+      { index: true, element: <Home /> },
+      { path: 'contents/:id', element: <ContentDetail /> },
+      { path: '*', element: <NotFound /> },
+    ],
   },
 ]);
 

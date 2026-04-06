@@ -1,13 +1,13 @@
-import { useRef } from 'react';
-import { Link } from 'react-router';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
-
 import StaticRequest from '@api/dto/staticRequest';
 import { movieQueries } from '@api/hooks/movieQueries';
 import HeroCarouselSkeleton from '@components/skeleton/HeroCarouselSkeleton';
 import { useQuery } from '@tanstack/react-query';
+import { useRef } from 'react';
+import { Link } from 'react-router';
+import { getImageUrl } from 'src/utils/image.util';
 import 'swiper/css';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
 const HeroCarousel = () => {
   const { data: heroData, isPending } = useQuery(
@@ -42,7 +42,7 @@ const HeroCarousel = () => {
                 <SwiperSlide key={`hero-swiper-${content.id}`}>
                   <div className='hero'>
                     <img
-                      src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
+                      src={getImageUrl(content.backdrop_path, 'original')}
                       className='hero-img'
                     />
                     <div className='hero-overlay'>

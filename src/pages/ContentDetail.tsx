@@ -7,6 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Suspense, useState } from 'react';
 import { useParams } from 'react-router';
 import { getRunningTimeToString } from 'src/utils/time.util';
+
+import { getBackgroundImage } from 'src/utils/image.util';
 import NotFound from './NotFound';
 
 type Tab = '콘텐츠 정보' | '관련 콘텐츠';
@@ -37,7 +39,7 @@ const ContentDetail = () => {
               <div
                 className='detail-hero-bg'
                 style={{
-                  backgroundImage: `url(https://image.tmdb.org/t/p/w500${data.data.backdrop_path})`,
+                  backgroundImage: getBackgroundImage(data.data.backdrop_path, 'w500'),
                 }}
               />
               <div className='detail-hero-grad' />
@@ -66,23 +68,11 @@ const ContentDetail = () => {
                   <div className='detail-stats'>
                     <div className='stat-item'>
                       <div className='stat-value'>
-                        <span className='star'>★</span>{' '}
+                        <span className='star'>★</span>
                         {Number.parseFloat(data.data.vote_average.toString()).toFixed(1)}
                       </div>
                       <div className='stat-label'>평균 별점</div>
                     </div>
-                    {/* <div className='stat-divider' /> */}
-                    {/* <div className='stat-item'>
-                      <div className='stat-value'>
-                        70.8<span style={{ fontSize: 18 }}>%</span>
-                      </div>
-                      <div className='stat-label'>4점 이상 평가</div>
-                    </div>
-                    <div className='stat-divider' />
-                    <div className='stat-item'>
-                      <div className='stat-value'>34,709</div>
-                      <div className='stat-label'>보고싶어요</div>
-                    </div> */}
                   </div>
 
                   <button className='btn-watch'>감상하기</button>
@@ -111,7 +101,7 @@ const ContentDetail = () => {
                 <div className='detail-right'>
                   <div className='detail-trailer'>
                     <img
-                      src={`https://image.tmdb.org/t/p/w780${data.data.backdrop_path}`}
+                      src={`${process.env.IMAGE_BASE_URL}/w780${data.data.backdrop_path}`}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </div>
@@ -139,7 +129,6 @@ const ContentDetail = () => {
                 <ContentInfoTab credits={data?.data.credits ?? []} movieId={data?.data.id} />
               )}
               {tab === '관련 콘텐츠' && <RelatedTab movieId={data.data.id} />}
-              {/* {tab === '회차 정보' && <EpisodesTab content={content} />} */}
             </div>
           )}
         </div>

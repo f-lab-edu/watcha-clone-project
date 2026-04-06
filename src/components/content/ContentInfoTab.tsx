@@ -1,4 +1,5 @@
 import { Credit } from 'src/types/credit';
+import { getBackgroundImage } from 'src/utils/image.util';
 
 type ContentInfoProps = {
   movieId: number;
@@ -25,7 +26,7 @@ const ContentInfoTab = ({ movieId, credits }: ContentInfoProps) => {
                   <img
                     src={
                       director.profile_path
-                        ? `https://image.tmdb.org/t/p/w185${director.profile_path}`
+                        ? getBackgroundImage(director.profile_path, 'w185')
                         : '/placeholder-avatar.png'
                     }
                     alt={director.name}
@@ -44,7 +45,7 @@ const ContentInfoTab = ({ movieId, credits }: ContentInfoProps) => {
                   <img
                     src={
                       person.profile_path
-                        ? `https://image.tmdb.org/t/p/w185${person.profile_path}`
+                        ? getBackgroundImage(person.profile_path, 'w185')
                         : '/placeholder-avatar.png'
                     }
                     alt={person.name}

@@ -6,9 +6,9 @@ import ListSkeleton from '@components/skeleton/ListSkeleton';
 import { useQuery } from '@tanstack/react-query';
 import { Suspense, useState } from 'react';
 import { useParams } from 'react-router';
+import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
 
-import { getBackgroundImage } from 'src/utils/image.util';
 import NotFound from './NotFound';
 
 type Tab = '콘텐츠 정보' | '관련 콘텐츠';
@@ -22,8 +22,6 @@ const ContentDetail = () => {
   const { data, isPending, isError, isFetching } = useQuery(
     movieQueries.movieDetail(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
   );
-
-  console.log(data, isPending, isError, isFetching);
 
   const [tab, setTab] = useState<Tab>('콘텐츠 정보');
 
@@ -101,7 +99,7 @@ const ContentDetail = () => {
                 <div className='detail-right'>
                   <div className='detail-trailer'>
                     <img
-                      src={`${process.env.IMAGE_BASE_URL}/w780${data.data.backdrop_path}`}
+                      src={getImageUrl(data.data.backdrop_path, 'w780')}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </div>
@@ -125,9 +123,7 @@ const ContentDetail = () => {
           {/* 탭 콘텐츠 */}
           {data?.data.id && (
             <div className='tab-content'>
-              {tab === '콘텐츠 정보' && (
-                <ContentInfoTab credits={data?.data.credits ?? []} movieId={data?.data.id} />
-              )}
+              {tab === '콘텐츠 정보' && <ContentInfoTab credits={data?.data.credits ?? []} />}
               {tab === '관련 콘텐츠' && <RelatedTab movieId={data.data.id} />}
             </div>
           )}

@@ -2,12 +2,11 @@ import { Credit } from 'src/types/credit';
 import { getBackgroundImage } from 'src/utils/image.util';
 
 type ContentInfoProps = {
-  movieId: number;
   credits: Credit;
 };
 
 // 콘텐츠 정보 탭
-const ContentInfoTab = ({ movieId, credits }: ContentInfoProps) => {
+const ContentInfoTab = ({ credits }: ContentInfoProps) => {
   const director = credits.crew.find((c) => c.job === 'Directing');
 
   return (
@@ -57,8 +56,6 @@ const ContentInfoTab = ({ movieId, credits }: ContentInfoProps) => {
                 </div>
               </div>
             ))}
-
-            {/* <ReviewSection movieId={movieId} /> */}
           </div>
         </div>
       )}

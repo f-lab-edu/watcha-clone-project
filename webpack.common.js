@@ -1,4 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
+const {TsconfigPathsPlugin} =  require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   entry: "./src/Main.tsx", // 번들링 시작점

@@ -1,19 +1,32 @@
 import StaticRequest from '@api/dto/staticRequest';
 import { movieQueries } from '@api/hooks/movieQueries';
 import CardPoster from '@components/home/CardPoster';
+import ListSkeleton from '@components/skeleton/ListSkeleton';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router';
 import { getImageUrl } from 'src/utils/image.util';
 
 const RelatedTab = ({ movieId }: { movieId: number }) => {
-  const { data } = useQuery(movieQueries.similar(movieId, StaticRequest.baseRequest));
+  const {
+    data: relatedData,
+    isPending,
+    isFetching,
+  } = useQuery(movieQueries.similar(movieId, StaticRequest.baseRequest));
+
+  if (isPending || isFetching) {
+    return <ListSkeleton />;
+  }
 
   return (
     <div className='related-grid'>
-      {data?.data.results
-        .filter((m) => m.backdrop_path)
-        .map((m) => (
-          <CardPoster key={`related-${m.id}`} img={getImageUrl(m.poster_path, 'w300')} />
-        ))}
+      {relatedData?.data &&
+        relatedData.data.results
+          .filter((m) => m.backdrop_path)
+          .map((m) => (
+            <Link to={`/contents/${m.id}`}>
+              <CardPoster key={`related-${m.id}`} img={getImageUrl(m.poster_path, 'w300')} />
+            </Link>
+          ))}
     </div>
   );
 };

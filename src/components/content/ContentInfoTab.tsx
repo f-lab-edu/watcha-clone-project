@@ -1,5 +1,5 @@
 import { Credit } from 'src/types/credit';
-import { getBackgroundImage } from 'src/utils/image.util';
+import { getImageUrl } from '../../utils/image.util';
 
 type ContentInfoProps = {
   credits: Credit;
@@ -25,7 +25,7 @@ const ContentInfoTab = ({ credits }: ContentInfoProps) => {
                   <img
                     src={
                       director.profile_path
-                        ? getBackgroundImage(director.profile_path, 'w185')
+                        ? getImageUrl(director.profile_path, 'w185')
                         : '/placeholder-avatar.png'
                     }
                     alt={director.name}
@@ -44,7 +44,7 @@ const ContentInfoTab = ({ credits }: ContentInfoProps) => {
                   <img
                     src={
                       person.profile_path
-                        ? getBackgroundImage(person.profile_path, 'w185')
+                        ? getImageUrl(person.profile_path, 'w185')
                         : '/placeholder-avatar.png'
                     }
                     alt={person.name}

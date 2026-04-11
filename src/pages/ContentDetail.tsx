@@ -9,6 +9,7 @@ import { useParams } from 'react-router';
 import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
 
+import { useModal } from '@components/modal/modalContext';
 import NotFound from './NotFound';
 
 type Tab = '콘텐츠 정보' | '관련 콘텐츠';
@@ -23,7 +24,14 @@ const ContentDetail = () => {
     movieQueries.movieDetail(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
   );
 
+  const { openModal } = useModal();
   const [tab, setTab] = useState<Tab>('콘텐츠 정보');
+  const handleModal = () =>
+    openModal({
+      isOpen: true,
+      title: '왓챠를 시작해보세요',
+      desc: '로그인이 필요해요',
+    });
 
   return (
     <Suspense fallback={<ListSkeleton />}>
@@ -48,7 +56,7 @@ const ContentDetail = () => {
                   <div className='detail-badge-row'>
                     <span className='detail-age-badge'>
                       {data.data.release_dates.results?.find((r) => r.iso_3166_1 === 'KR')
-                        ?.release_dates[0].certification ?? ''}
+                        ?.release_dates[0].certification || 'ALL'}
                     </span>
                     <span>{data.data.release_date.split('-')[0]}</span>
                     <span>·</span>
@@ -73,18 +81,20 @@ const ContentDetail = () => {
                     </div>
                   </div>
 
-                  <button className='btn-watch'>감상하기</button>
+                  <button type='button' className='btn-watch' onClick={handleModal}>
+                    감상하기
+                  </button>
 
                   <div className='detail-icon-actions'>
-                    <button className='icon-action-btn'>
+                    <button type='button' className='icon-action-btn' onClick={handleModal}>
                       <span className='icon'>＋</span>
                       보고싶어요
                     </button>
-                    <button className='icon-action-btn'>
+                    <button type='button' className='icon-action-btn' onClick={handleModal}>
                       <span className='icon'>☆</span>
                       평가하기
                     </button>
-                    <button className='icon-action-btn'>
+                    <button type='button' className='icon-action-btn' onClick={handleModal}>
                       <span className='icon'>💬</span>
                       왓챠파티
                     </button>

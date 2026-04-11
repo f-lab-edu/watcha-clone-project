@@ -2,9 +2,8 @@ import StaticRequest from '@api/dto/staticRequest';
 import { movieQueries } from '@api/hooks/movieQueries';
 import ContentInfoTab from '@components/content/ContentInfoTab';
 import RelatedTab from '@components/content/detail/RelatedContentSection';
-import ListSkeleton from '@components/skeleton/ListSkeleton';
 import { useQuery } from '@tanstack/react-query';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
@@ -41,7 +40,7 @@ const ContentDetail = () => {
   }, [id]);
 
   return (
-    <Suspense fallback={<ListSkeleton />}>
+    <>
       {isError ? (
         <NotFound type='ERROR' />
       ) : (
@@ -157,7 +156,7 @@ const ContentDetail = () => {
           )}
         </div>
       )}
-    </Suspense>
+    </>
   );
 };
 

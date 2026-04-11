@@ -1,6 +1,7 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const Dotenv = require('dotenv-webpack');
+const path = require("path");
 
 // ✅ 최상단에서 먼저 로드
 const dotenv = require('dotenv');

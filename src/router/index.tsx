@@ -1,9 +1,10 @@
+import Home from '@pages/Home';
 import NotFound from '@pages/NotFound';
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
+
 import Default from '../components/layout/Default';
-import Home from '../pages/Home';
 
 const ContentDetail = lazy(() => import('@pages/ContentDetail'));
 const Search = lazy(() => import('@pages/Search'));

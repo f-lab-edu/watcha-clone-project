@@ -20,11 +20,6 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin()], // tsconfig paths 자동 참조
     extensions: [".tsx", ".ts", ".js"], // import 시 확장자 생략 가능하게 tsx,ts,js 순으로
   },
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
-  },
   module: {
     rules: [
       {

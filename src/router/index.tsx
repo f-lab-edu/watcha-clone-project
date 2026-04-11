@@ -1,12 +1,15 @@
-import ContentDetail from '@pages/ContentDetail';
-import GenreList from '@pages/GenreLis';
+import Home from '@pages/Home';
 import NotFound from '@pages/NotFound';
-import Search from '@pages/Search';
-import SearchTag from '@pages/SearchTag';
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
+
 import Default from '../components/layout/Default';
-import Home from '../pages/Home';
+
+const ContentDetail = lazy(() => import('@pages/ContentDetail'));
+const Search = lazy(() => import('@pages/Search'));
+const GenreList = lazy(() => import('@pages/GenreLis'));
+const SearchTag = lazy(() => import('@pages/SearchTag'));
 
 const route = createBrowserRouter([
   {

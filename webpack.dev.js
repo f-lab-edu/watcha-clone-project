@@ -1,7 +1,10 @@
-const { merge } = require("webpack-merge");
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const Dotenv = require('dotenv-webpack');
-require('dotenv').config({ path: './.env.development' });
+
+// ✅ 최상단에서 먼저 로드
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env.development' });
 
 module.exports = merge(common, {
   mode: 'development',
@@ -19,11 +22,16 @@ module.exports = merge(common, {
       },
     ]
   },
+output: {
+  path: path.resolve(__dirname, "dist"),
+  filename: "bundle.js",
+  publicPath: '/',
+},
   
   devServer: { // 개발 서버
     proxy: [{ // 로컬에서 tmdb API 호출 시 CORS 문제 해결 위해 프록시 설정
       context: ['/api'], // '/api'로 시작하는 요청 가로챔
-      target: process.env.API_BASE_URL, // 실제 API 서버 주소로 프록시
+      target: process.env.TMDB_BASE_URL, // 실제 API 서버 주소로 프록시
       changeOrigin: true, // 프록시 요청 시 Host 헤더를 타겟 URL로 변경
       pathRewrite: { '^/api': '' }, // '/api' 접두사 제거하여 타겟 서버로 전달
       secure: false // https 인증서 검증 무시 (개발에서만 사용)

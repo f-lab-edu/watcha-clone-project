@@ -8,11 +8,14 @@ export interface Content {
   overview: string,
   popularity: number,
   poster_path: string,
+  profile_path: string,
   release_date: string,
   title: string,
+  name: string;
   video: false,
   vote_average: number,
   vote_count: number
+  media_type: 'movie' | 'tv' | 'person';
 }
 
 export interface Genre {

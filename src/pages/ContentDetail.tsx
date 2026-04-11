@@ -4,24 +4,27 @@ import ContentInfoTab from '@components/content/ContentInfoTab';
 import RelatedTab from '@components/content/detail/RelatedContentSection';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
 import { useQuery } from '@tanstack/react-query';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
 
+import { videoQueries } from '@api/hooks/videoQueries';
 import { useModal } from '@components/modal/modalContext';
 import NotFound from './NotFound';
 
 type Tab = '콘텐츠 정보' | '관련 콘텐츠';
 
 const ContentDetail = () => {
-  const { id } = useParams();
-  if (!id || Number.isNaN(Number(id))) {
+  const { id, mediaType } = useParams();
+  if (!id || Number.isNaN(Number(id)) || (mediaType !== 'movie' && mediaType !== 'tv')) {
     return <NotFound type='ERROR' />;
   }
 
   const { data, isPending, isError, isFetching } = useQuery(
-    movieQueries.movieDetail(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
+    mediaType === 'movie'
+      ? movieQueries.movieDetail(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest)
+      : videoQueries.tvDetail(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
   );
 
   const { openModal } = useModal();
@@ -32,6 +35,10 @@ const ContentDetail = () => {
       title: '왓챠를 시작해보세요',
       desc: '로그인이 필요해요',
     });
+
+  useEffect(() => {
+    setTab('콘텐츠 정보');
+  }, [id]);
 
   return (
     <Suspense fallback={<ListSkeleton />}>
@@ -52,19 +59,30 @@ const ContentDetail = () => {
               <div className='detail-hero-inner'>
                 {/* 왼쪽 */}
                 <div className='detail-left'>
-                  <div className='detail-season'>{data.data.title}</div>
-                  <div className='detail-badge-row'>
-                    <span className='detail-age-badge'>
-                      {data.data.release_dates.results?.find((r) => r.iso_3166_1 === 'KR')
-                        ?.release_dates[0].certification || 'ALL'}
-                    </span>
-                    <span>{data.data.release_date.split('-')[0]}</span>
-                    <span>·</span>
-                    <span>{getRunningTimeToString(data.data.runtime)}</span>
-                    <span>·</span>
-                    <span>{data.data.genres.map((g) => g.name).join('·')}</span>
-                  </div>
-
+                  <h1>{mediaType === 'movie' ? data.data.title : data.data.name}</h1>
+                  {mediaType === 'movie' ? (
+                    <div className='detail-badge-row'>
+                      <span className='detail-age-badge'>
+                        {data.data.release_dates.results?.find((r) => r.iso_3166_1 === 'KR')
+                          ?.release_dates[0].certification || 'ALL'}
+                      </span>
+                      <span>{data.data.release_date.split('-')[0]}</span>
+                      <span>·</span>
+                      <span>{getRunningTimeToString(data.data.runtime)}</span>
+                      <span>·</span>
+                      <span>{data.data.genres.map((g) => g.name).join('·')}</span>
+                    </div>
+                  ) : (
+                    <div className='detail-badge-row'>
+                      <span className='detail-age-badge'>
+                        {data.data.content_ratings.results?.find((r) => r.iso_3166_1 === 'KR')
+                          ?.rating || 'ALL'}
+                      </span>
+                      <span>{data.data.first_air_date}</span>
+                      <span>·</span>
+                      <span>{data.data.genres.map((g) => g.name).join('·')}</span>
+                    </div>
+                  )}
                   <p className={'detail-desc'}>
                     {data.data.overview}
                     <button className='more-btn'>더보기</button>
@@ -134,7 +152,7 @@ const ContentDetail = () => {
           {data?.data.id && (
             <div className='tab-content'>
               {tab === '콘텐츠 정보' && <ContentInfoTab credits={data?.data.credits ?? []} />}
-              {tab === '관련 콘텐츠' && <RelatedTab movieId={data.data.id} />}
+              {tab === '관련 콘텐츠' && <RelatedTab movieId={data.data.id} type={mediaType} />}
             </div>
           )}
         </div>

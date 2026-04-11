@@ -33,7 +33,7 @@ const TopRatedSection = () => {
             }}
             gap={10}
             items={contents.map((m, i) => (
-              <Link to={`/movie/${m.id}`}>
+              <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
                 <div className='rank-card'>
                   <div className='rank-number'>{i + 1}</div>
                   <CardPoster img={`https://image.tmdb.org/t/p/w342${m.poster_path}`} />

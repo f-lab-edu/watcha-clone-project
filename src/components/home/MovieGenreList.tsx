@@ -1,5 +1,4 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { movieQueries } from '@api/hooks/movieQueries';
 import { useMovieListByGenre } from '@api/hooks/useMovies';
 import Carousel from '@components/Carousel/Carousel';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
@@ -7,11 +6,12 @@ import CarouselSection from '@components/swiper/CarouselSection';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 
+import { videoQueries } from '@api/hooks/videoQueries';
 import CardPoster from './CardPoster';
 
 const MovieGenreList = () => {
   const { data: genresData, isPending: isGenresPending } = useQuery(
-    movieQueries.genres(StaticRequest.baseRequest),
+    videoQueries.genres('movie', StaticRequest.baseRequest),
   );
   const genres = (genresData?.data.genres ?? []).slice(0, 5);
   const { data: movieList, isPending: isMovieListPending } = useMovieListByGenre(
@@ -37,7 +37,7 @@ const MovieGenreList = () => {
                     }}
                     gap={10}
                     items={list.map((m) => (
-                      <Link to={`/movie/${m.id}`}>
+                      <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
                         <CardPoster img={`https://image.tmdb.org/t/p/w342${m.poster_path}`} />
                       </Link>
                     ))}

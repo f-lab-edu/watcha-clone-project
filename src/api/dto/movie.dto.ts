@@ -50,7 +50,15 @@ export interface MovieDetailResponse extends Content {
       "release_dates": ReleaseInfo[]
     }[]
   },
+  content_ratings: {
+    results: {
+      descriptors: string[],
+      iso_3166_1: string,
+      rating: string
+    }[]
+  }
   credits: Credit
+  first_air_date: string;
 }
 
 export interface MovieReviewListResponse {

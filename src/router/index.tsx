@@ -1,5 +1,8 @@
 import ContentDetail from '@pages/ContentDetail';
+import GenreList from '@pages/GenreLis';
 import NotFound from '@pages/NotFound';
+import Search from '@pages/Search';
+import SearchTag from '@pages/SearchTag';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import Default from '../components/layout/Default';
@@ -11,7 +14,10 @@ const route = createBrowserRouter([
     element: <Default />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'contents/:id', element: <ContentDetail /> },
+      { path: 'contents/:mediaType/:id', element: <ContentDetail /> },
+      { path: 'search', element: <Search /> },
+      { path: 'genre/:type', element: <GenreList /> },
+      { path: 'tag', element: <SearchTag /> },
       { path: '*', element: <NotFound /> },
     ],
   },

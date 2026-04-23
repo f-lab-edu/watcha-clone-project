@@ -9,7 +9,7 @@ import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
 
 import { videoQueries } from '@api/hooks/videoQueries';
-import { useModal } from '@components/modal/modalContext';
+import { useModal } from '@components/modal/ModalContext';
 import NotFound from './NotFound';
 
 type Tab = '콘텐츠 정보' | '관련 콘텐츠';

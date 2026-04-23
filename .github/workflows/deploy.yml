@@ -28,6 +28,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Create env file
+        run: |
+          echo "REACT_API_BASE_URL=${{ secrets.REACT_API_BASE_URL }}" >> .env.production
+          echo "REACT_API_KEY=${{ secrets.REACT_API_KEY }}" >> .env.production
+          echo "REACT_API_ACCESS_TOKEN=${{ secrets.REACT_API_ACCESS_TOKEN }}" >> .env.production
+
       - name: Build
         run: pnpm build:prod
         env:

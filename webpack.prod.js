@@ -11,6 +11,7 @@ module.exports = merge(common, {
   output: {
     path: path.resolve(__dirname, "dist"), // 빌드 후 폴더명
     filename: "bundle.[contenthash].js", // 파일명
+    publicPath: '/',
     clean: true, // 빌드 시 기존 파일 제거여부
   },
   plugins: [

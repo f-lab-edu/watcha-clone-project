@@ -24,7 +24,7 @@ const RelatedTab = ({ movieId, type }: { movieId: number; type: 'movie' | 'tv' }
 
   return (
     <div className='related-grid'>
-      {relatedData.data.results
+      {relatedData.results
         .filter((m) => m.backdrop_path)
         .map((m) => (
           <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>

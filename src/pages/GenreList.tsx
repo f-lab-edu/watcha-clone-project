@@ -23,7 +23,7 @@ const GenreList = () => {
     <div className='ga-root'>
       <h1 className='ga-title'>{type === 'movie' ? '비디오' : 'TV'} 장르</h1>
       <div className='ga-grid'>
-        {genresData.data.genres.map((g, index) => (
+        {genresData.genres.map((g, index) => (
           <div
             key={`${type}-${g.id}`}
             className='ga-card'

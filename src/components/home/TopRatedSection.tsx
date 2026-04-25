@@ -13,7 +13,7 @@ const TopRatedSection = () => {
     isPending,
     isFetching,
   } = useSuspenseQuery(topRatedQueryOptions(StaticRequest.baseRequest));
-  const contents = topRatedData.data.results ?? [];
+  const contents = topRatedData.results ?? [];
 
   if (isPending || isFetching) {
     return <ListSkeleton />;

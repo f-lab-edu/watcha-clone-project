@@ -25,7 +25,7 @@ const GenreSection = () => {
             모두 보기
           </Link>
         </div>
-        <GenreCarousel type='movie' items={movieData.data.genres ?? []} ranDomIndex={10} />
+        <GenreCarousel type='movie' items={movieData.genres ?? []} ranDomIndex={10} />
       </div>
 
       <div className='sp-section'>
@@ -35,7 +35,7 @@ const GenreSection = () => {
             모두 보기
           </Link>
         </div>
-        <GenreCarousel type='tv' items={tvData.data.genres ?? []} ranDomIndex={3} />
+        <GenreCarousel type='tv' items={tvData.genres ?? []} ranDomIndex={3} />
       </div>
     </div>
   );

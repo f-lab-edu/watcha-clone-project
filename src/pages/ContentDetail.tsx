@@ -42,44 +42,44 @@ const ContentDetail = () => {
   return (
     <div className='page'>
       {/* 히어로 */}
-      {data.data && (
+      {data && (
         <div className='detail-hero'>
           <div
             className='detail-hero-bg'
             style={{
-              backgroundImage: getBackgroundImage(data.data.backdrop_path, 'w500'),
+              backgroundImage: getBackgroundImage(data.backdrop_path, 'w500'),
             }}
           />
           <div className='detail-hero-grad' />
           <div className='detail-hero-inner'>
             {/* 왼쪽 */}
             <div className='detail-left'>
-              <h1>{mediaType === 'movie' ? data.data.title : data.data.name}</h1>
+              <h1>{mediaType === 'movie' ? data.title : data.name}</h1>
               {mediaType === 'movie' ? (
                 <div className='detail-badge-row'>
                   <span className='detail-age-badge'>
-                    {data.data.release_dates.results?.find((r) => r.iso_3166_1 === 'KR')
+                    {data.release_dates.results?.find((r) => r.iso_3166_1 === 'KR')
                       ?.release_dates[0].certification || 'ALL'}
                   </span>
-                  <span>{data.data.release_date.split('-')[0]}</span>
+                  <span>{data.release_date.split('-')[0]}</span>
                   <span>·</span>
-                  <span>{getRunningTimeToString(data.data.runtime)}</span>
+                  <span>{getRunningTimeToString(data.runtime)}</span>
                   <span>·</span>
-                  <span>{data.data.genres.map((g) => g.name).join('·')}</span>
+                  <span>{data.genres.map((g) => g.name).join('·')}</span>
                 </div>
               ) : (
                 <div className='detail-badge-row'>
                   <span className='detail-age-badge'>
-                    {data.data.content_ratings.results?.find((r) => r.iso_3166_1 === 'KR')
-                      ?.rating || 'ALL'}
+                    {data.content_ratings.results?.find((r) => r.iso_3166_1 === 'KR')?.rating ||
+                      'ALL'}
                   </span>
-                  <span>{data.data.first_air_date}</span>
+                  <span>{data.first_air_date}</span>
                   <span>·</span>
-                  <span>{data.data.genres.map((g) => g.name).join('·')}</span>
+                  <span>{data.genres.map((g) => g.name).join('·')}</span>
                 </div>
               )}
               <p className={'detail-desc'}>
-                {data.data.overview}
+                {data.overview}
                 <button className='more-btn'>더보기</button>
               </p>
 
@@ -88,7 +88,7 @@ const ContentDetail = () => {
                 <div className='stat-item'>
                   <div className='stat-value'>
                     <span className='star'>★</span>
-                    {Number.parseFloat(data.data.vote_average.toString()).toFixed(1)}
+                    {Number.parseFloat(data.vote_average.toString()).toFixed(1)}
                   </div>
                   <div className='stat-label'>평균 별점</div>
                 </div>
@@ -122,9 +122,9 @@ const ContentDetail = () => {
             <div className='detail-right'>
               <div className='detail-trailer'>
                 <ImageComp
-                  src={getImageUrl(data.data.backdrop_path, 'w780')}
+                  src={getImageUrl(data.backdrop_path, 'w780')}
                   className='cover'
-                  alt={`Trailer-img-${data.data.title ? data.data.title : data.data.name}`}
+                  alt={`Trailer-img-${data.title ? data.title : data.name}`}
                 />
               </div>
             </div>
@@ -145,10 +145,10 @@ const ContentDetail = () => {
       </div>
 
       {/* 탭 콘텐츠 */}
-      {data?.data.id && (
+      {data.id && (
         <div className='tab-content'>
-          {tab === '콘텐츠 정보' && <ContentInfoTab credits={data?.data.credits ?? []} />}
-          {tab === '관련 콘텐츠' && <RelatedTab movieId={data.data.id} type={mediaType} />}
+          {tab === '콘텐츠 정보' && <ContentInfoTab credits={data.credits ?? []} />}
+          {tab === '관련 콘텐츠' && <RelatedTab movieId={data.id} type={mediaType} />}
         </div>
       )}
     </div>

@@ -59,7 +59,7 @@ const Search = () => {
         {/* TODO person일경우 처리 필요 */}
         {debouncedQuery ? (
           <div className='sp-result-list sp-fade'>
-            {data.data.results.length === 0 ? (
+            {data.results.length === 0 ? (
               <div className='sp-empty'>
                 <p className='sp-empty-text'>검색 결과가 없습니다</p>
                 <br />
@@ -67,7 +67,7 @@ const Search = () => {
               </div>
             ) : (
               <>
-                {data.data.results.map((result) => (
+                {data.results.map((result) => (
                   <Link to={`/contents/${result.media_type}/${result.id}`}>
                     <div
                       key={`search-result-${result.id}`}

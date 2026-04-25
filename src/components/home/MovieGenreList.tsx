@@ -13,7 +13,7 @@ const MovieGenreList = () => {
   const { data: genresData, isPending: isGenresPending } = useSuspenseQuery(
     genresQueryOptions('movie', StaticRequest.baseRequest),
   );
-  const genres = (genresData.data.genres ?? []).slice(0, 5);
+  const genres = (genresData.genres ?? []).slice(0, 5);
   const { data: movieList, isPending: isMovieListPending } = useMovieListByGenre(
     genres.map((g) => g.id),
     StaticRequest.baseRequest,

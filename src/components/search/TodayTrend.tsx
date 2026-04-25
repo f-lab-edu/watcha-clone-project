@@ -18,7 +18,7 @@ const POPULAR_KEYWORDS = [
 
 const TodayTrend = () => {
   const { data } = useSuspenseQuery(trendingQueryOptions(StaticRequest.baseRequest));
-  const trendList = data.data?.results ?? [];
+  const trendList = data.results ?? [];
 
   if (!trendList || trendList.length === 0) {
     return null;

@@ -11,7 +11,7 @@ const HeroCarousel = () => {
     isPending,
     isFetching,
   } = useSuspenseQuery(nowPlayingQueryOptions(StaticRequest.baseRequest));
-  const contents = heroData.data.results ?? [];
+  const contents = heroData.results ?? [];
 
   if (isPending || isFetching) {
     return <HeroCarouselSkeleton />;

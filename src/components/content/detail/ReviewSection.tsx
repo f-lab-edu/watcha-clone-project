@@ -21,7 +21,7 @@ const ReviewSection = ({ movieId }: { movieId: number }) => {
       </div>
 
       {/* <div className='rv-list'>
-        {reviews?.data.results.map((rv) => (
+        {reviews?.results.map((rv) => (
           <div key={rv.id} className='rv-item'>
             <div className='rv-body'>
               <div className='rv-name-row'>

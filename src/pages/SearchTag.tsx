@@ -32,7 +32,7 @@ const SearchTag = () => {
       return;
     }
 
-    const foundGenre = genreData.data.genres.find((g) => g.id === Number(searchParams.get('ids')));
+    const foundGenre = genreData.genres.find((g) => g.id === Number(searchParams.get('ids')));
     if (foundGenre) {
       setActiveGenreFilter(foundGenre);
     }
@@ -49,7 +49,7 @@ const SearchTag = () => {
       </div>
 
       <div className='sp-filter-row'>
-        {genreData.data.genres.map((g) => (
+        {genreData.genres.map((g) => (
           <button
             key={`${g.id}`}
             className={`sp-filter-chip ${activeGenreFilter?.id === g.id ? 'active' : ''}`}
@@ -66,7 +66,7 @@ const SearchTag = () => {
         <ListSkeleton />
       ) : (
         <div className='sp-poster-grid'>
-          {data.data.results.map((content) => (
+          {data.results.map((content) => (
             <Link to={`/contents/${content.title ? 'movie' : 'tv'}/${content.id}`}>
               <CardPoster
                 key={`search-tag-${content.id}`}

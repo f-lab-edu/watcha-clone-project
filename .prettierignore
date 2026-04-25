@@ -1,0 +1,9 @@
+# Ignore artifacts:
+dist
+
+# Ignore all HTML files:
+**/*.html
+**/*.css
+
+**/.git
+**/node_modules

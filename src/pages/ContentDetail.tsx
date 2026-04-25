@@ -9,6 +9,7 @@ import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
 
 import { tvDetailQueryOptions } from '@api/hooks/videoQueries';
+import ImageComp from '@components/image/ImageComp';
 import { useModal } from '@components/modal/ModalContext';
 import NotFound from './NotFound';
 
@@ -125,9 +126,9 @@ const ContentDetail = () => {
                 {/* 오른쪽 트레일러 */}
                 <div className='detail-right'>
                   <div className='detail-trailer'>
-                    <img
+                    <ImageComp
                       src={getImageUrl(data.data.backdrop_path, 'w780')}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      className='cover'
                       alt={`Trailer-img-${data.data.title ? data.data.title : data.data.name}`}
                     />
                   </div>

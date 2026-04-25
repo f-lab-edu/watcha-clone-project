@@ -27,6 +27,7 @@ const HeroCarousel = () => {
               to={`/contents/${content.title ? 'movie' : 'tv'}/${content.id}`}
               style={{ cursor: 'pointer' }}>
               <div className='hero'>
+                {/* TODO ImageComp로 교체 필요 */}
                 <img
                   src={`https://image.tmdb.org/t/p/w1280${content.backdrop_path}`}
                   className='hero-img'

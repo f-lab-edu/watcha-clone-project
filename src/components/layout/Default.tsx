@@ -9,11 +9,11 @@ const Default = () => {
   return (
     <div className='app'>
       <Header />
-      <Suspense fallback={<LoadingSkeleton />}>
-        <ErrorBoundary>
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingSkeleton />}>
           <Outlet />
-        </ErrorBoundary>
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };

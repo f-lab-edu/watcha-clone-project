@@ -40,7 +40,7 @@ const MovieGenreList = () => {
                       <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
                         <CardPoster
                           img={`https://image.tmdb.org/t/p/w342${m.poster_path}`}
-                          alt={`${genres[id].name}-genre-poster-${m.name}`}
+                          alt={`${genres[id].name}-genre-poster-${m.title ? m.title : m.name}`}
                         />
                       </Link>
                     ))}

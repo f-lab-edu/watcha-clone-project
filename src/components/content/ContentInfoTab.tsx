@@ -28,7 +28,7 @@ const ContentInfoTab = ({ credits }: ContentInfoProps) => {
                         ? getImageUrl(director.profile_path, 'w185')
                         : '/placeholder-avatar.png'
                     }
-                    alt={director.name}
+                    alt={'director-img' + director.name}
                   />
                 </div>
                 <div>
@@ -47,7 +47,7 @@ const ContentInfoTab = ({ credits }: ContentInfoProps) => {
                         ? getImageUrl(person.profile_path, 'w185')
                         : '/placeholder-avatar.png'
                     }
-                    alt={person.name}
+                    alt={'character-img' + person.name}
                   />
                 </div>
                 <div>

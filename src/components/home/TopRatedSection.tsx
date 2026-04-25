@@ -38,7 +38,7 @@ const TopRatedSection = () => {
                   <div className='rank-number'>{i + 1}</div>
                   <CardPoster
                     img={`https://image.tmdb.org/t/p/w342${m.poster_path}`}
-                    alt={`top-rated-poster-${m.name}`}
+                    alt={`top-rated-poster-${m.title ? m.title : m.name}`}
                   />
                 </div>
               </Link>

@@ -25,7 +25,7 @@ const GenreList = () => {
       <div className='ga-grid'>
         {genresData.data.genres.map((g, index) => (
           <div
-            key={`search-genre-list-${type}-${g.id}`}
+            key={`${type}-${g.id}`}
             className='ga-card'
             // onClick={() => navigate(`/search?genre=${genre.label}`)}
           >

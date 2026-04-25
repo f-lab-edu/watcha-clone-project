@@ -51,7 +51,7 @@ const SearchTag = () => {
       <div className='sp-filter-row'>
         {genreData.data.genres.map((g) => (
           <button
-            key={`filter-tab-${g.id}`}
+            key={`${g.id}`}
             className={`sp-filter-chip ${activeGenreFilter?.id === g.id ? 'active' : ''}`}
             onClick={() => {
               setActiveGenreFilter((prev) => (prev?.id !== g.id ? g : prev));

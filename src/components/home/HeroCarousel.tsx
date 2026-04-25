@@ -26,7 +26,7 @@ const HeroCarousel = () => {
             <Link
               to={`/contents/${content.title ? 'movie' : 'tv'}/${content.id}`}
               style={{ cursor: 'pointer' }}>
-              <div key={`hero-swiper-${content.id}`} className='hero'>
+              <div className='hero'>
                 <img
                   src={`https://image.tmdb.org/t/p/w1280${content.backdrop_path}`}
                   className='hero-img'

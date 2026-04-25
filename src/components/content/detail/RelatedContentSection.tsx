@@ -29,7 +29,7 @@ const RelatedTab = ({ movieId, type }: { movieId: number; type: 'movie' | 'tv' }
         .map((m) => (
           <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
             <CardPoster
-              key={`related-${m.id}`}
+              key={`${m.id}`}
               img={getImageUrl(m.poster_path, 'w300')}
               alt={`related-card-poster-${m.title ? m.title : m.name}`}
             />

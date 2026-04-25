@@ -121,7 +121,7 @@ const Carousel = ({ items, loop = false, delay = 4000, breakpoints, gap = 0 }: C
         <div style={{ display: 'flex', gap: `${gap}px` }}>
           {items.map((item, index) => (
             <div
-              key={`real-${index}`}
+              key={index}
               style={{
                 flex: `0 0 calc((100% - ${gap * (slidesPerView - 1)}px) / ${slidesPerView})`,
               }}>

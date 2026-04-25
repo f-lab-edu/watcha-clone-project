@@ -128,6 +128,7 @@ const ContentDetail = () => {
                     <img
                       src={getImageUrl(data.data.backdrop_path, 'w780')}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      alt={`Trailer-img-${data.data.name}`}
                     />
                   </div>
                 </div>

@@ -38,7 +38,10 @@ const MovieGenreList = () => {
                     gap={10}
                     items={list.map((m) => (
                       <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
-                        <CardPoster img={`https://image.tmdb.org/t/p/w342${m.poster_path}`} />
+                        <CardPoster
+                          img={`https://image.tmdb.org/t/p/w342${m.poster_path}`}
+                          alt={`${genres[id].name}-genre-poster-${m.name}`}
+                        />
                       </Link>
                     ))}
                   />

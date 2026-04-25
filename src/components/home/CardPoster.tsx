@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 type CardPosterProps = {
   img: string;
+  alt: string;
 };
 
-const CardPoster = ({ img }: CardPosterProps) => {
+const CardPoster = ({ img, alt }: CardPosterProps) => {
   const [imgLoaded, setImgLoaded] = useState(false);
 
   return (
@@ -12,7 +13,7 @@ const CardPoster = ({ img }: CardPosterProps) => {
       {!imgLoaded && <div className='skeleton card-poster-skeleton' />}
       <img
         src={img}
-        alt='poster'
+        alt={alt}
         className='card-poster-img'
         style={{ opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
         onLoad={() => setImgLoaded(true)}

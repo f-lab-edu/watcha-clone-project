@@ -28,8 +28,11 @@ const HeroCarousel = () => {
               style={{ cursor: 'pointer' }}>
               <div key={`hero-swiper-${content.id}`} className='hero'>
                 <img
-                  src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
+                  src={`https://image.tmdb.org/t/p/w1280${content.backdrop_path}`}
                   className='hero-img'
+                  alt={`hero-img-${content.name}`}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  loading={index === 0 ? 'eager' : 'lazy'}
                 />
                 <div className='hero-overlay'>
                   <div className='hero-content'>

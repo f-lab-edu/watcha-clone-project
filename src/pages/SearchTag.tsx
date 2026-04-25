@@ -71,7 +71,7 @@ const SearchTag = () => {
               <CardPoster
                 key={`search-tag-${content.id}`}
                 img={getImageUrl(content.poster_path, 'w300')}
-                alt={`search-list-poster-${content.name}`}
+                alt={`search-list-poster-${content.title ? content.title : content.name}`}
               />
             </Link>
           ))}

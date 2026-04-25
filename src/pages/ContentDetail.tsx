@@ -31,7 +31,6 @@ const ContentDetail = () => {
   const [tab, setTab] = useState<Tab>('콘텐츠 정보');
   const handleModal = () =>
     openModal({
-      isOpen: true,
       title: '왓챠를 시작해보세요',
       desc: '로그인이 필요해요',
     });

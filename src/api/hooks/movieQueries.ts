@@ -3,37 +3,37 @@ import { queryOptions } from "@tanstack/react-query";
 import { SearchRequest } from "../dto/searchRequest";
 import { getMovieDetail, getMovieListByGenre, getMovieReviews, getNowPlaying, getSimilarMovies, getTopRated } from "../movie";
 
-export const movieQueries = {
+export const movieKeys = {
   all: () => ['movie'],
-  lists: () => [...movieQueries.all(), 'list'],
-  details: () => [...movieQueries.all(), 'detail'],
-
-  nowPlaying: (req: SearchRequest) => queryOptions({
-    queryKey: [...movieQueries.lists(), 'now-playing', { req }],
-    queryFn: () => getNowPlaying(req)
-  }),
-  topRated: (req: SearchRequest) => queryOptions({
-    queryKey: [...movieQueries.lists(), 'top-rated', { req }],
-    queryFn: () => getTopRated(req)
-  }),
-  movieListByGenre: (genreId: number, req: SearchRequest) => queryOptions({
-    queryKey: [...movieQueries.lists(), 'by-genre', genreId, { req }],
-    queryFn: () => getMovieListByGenre(genreId, req)
-  }),
-  movieDetail: (movieId: number, req: SearchRequest) => queryOptions({
-    queryKey: [...movieQueries.details(), movieId, { req }],
-    queryFn: () => getMovieDetail(movieId, req),
-    enabled: movieId > 0
-  }),
-  reviews: (movieId: number, req: SearchRequest) => queryOptions({
-    queryKey: [...movieQueries.lists(), 'reviews', movieId, { req }],
-    queryFn: () => getMovieReviews(movieId, req),
-    enabled: movieId > 0
-  }),
-  similar: (movieId: number, req: SearchRequest) => queryOptions({
-    queryKey: [...movieQueries.lists(), 'similar', movieId, { req }],
-    queryFn: () => getSimilarMovies(movieId, req),
-    enabled: movieId > 0
-  })
-
+  lists: () => [...movieKeys.all(), 'list'],
+  details: () => [...movieKeys.all(), 'detail'],
 }
+
+export const nowPlayingQueryOptions = (req: SearchRequest) => queryOptions({
+  queryKey: [...movieKeys.lists(), 'now-playing', { req }],
+  queryFn: () => getNowPlaying(req)
+})
+
+export const topRatedQueryOptions = (req: SearchRequest) => queryOptions({
+  queryKey: [...movieKeys.lists(), 'top-rated', { req }],
+  queryFn: () => getTopRated(req)
+})
+export const movieListByGenreQueryOptions = (genreId: number, req: SearchRequest) => queryOptions({
+  queryKey: [...movieKeys.lists(), 'by-genre', genreId, { req }],
+  queryFn: () => getMovieListByGenre(genreId, req)
+})
+export const movieDetailQueryOptions = (movieId: number, req: SearchRequest) => queryOptions({
+  queryKey: [...movieKeys.details(), movieId, { req }],
+  queryFn: () => getMovieDetail(movieId, req),
+  enabled: movieId > 0
+})
+export const reviewsQueryOptions = (movieId: number, req: SearchRequest) => queryOptions({
+  queryKey: [...movieKeys.lists(), 'reviews', movieId, { req }],
+  queryFn: () => getMovieReviews(movieId, req),
+  enabled: movieId > 0
+})
+export const similarQueryOptions = (movieId: number, req: SearchRequest) => queryOptions({
+  queryKey: [...movieKeys.lists(), 'similar', movieId, { req }],
+  queryFn: () => getSimilarMovies(movieId, req),
+  enabled: movieId > 0
+})

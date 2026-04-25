@@ -3,17 +3,17 @@ import { useMovieListByGenre } from '@api/hooks/useMovies';
 import Carousel from '@components/Carousel/Carousel';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
 import CarouselSection from '@components/swiper/CarouselSection';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 
 import { genresQueryOptions } from '@api/hooks/videoQueries';
 import CardPoster from './CardPoster';
 
 const MovieGenreList = () => {
-  const { data: genresData, isPending: isGenresPending } = useQuery(
+  const { data: genresData, isPending: isGenresPending } = useSuspenseQuery(
     genresQueryOptions('movie', StaticRequest.baseRequest),
   );
-  const genres = (genresData?.data.genres ?? []).slice(0, 5);
+  const genres = (genresData.data.genres ?? []).slice(0, 5);
   const { data: movieList, isPending: isMovieListPending } = useMovieListByGenre(
     genres.map((g) => g.id),
     StaticRequest.baseRequest,

@@ -2,7 +2,7 @@ import StaticRequest from '@api/dto/staticRequest';
 import { contentListByGenreQueryOptions, genresQueryOptions } from '@api/hooks/videoQueries';
 import CardPoster from '@components/home/CardPoster';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { Genre } from 'src/types/content';
@@ -17,7 +17,7 @@ const SearchTag = () => {
   const genreId = Number(searchParams.get('ids'));
 
   // TODO 무한 스크롤
-  const { data, isPending, isFetching, isError } = useQuery(
+  const { data, isPending, isFetching, isError } = useSuspenseQuery(
     contentListByGenreQueryOptions(type, genreId, StaticRequest.baseRequest),
   );
 
@@ -25,7 +25,7 @@ const SearchTag = () => {
     data: genreData,
     isPending: isMoviePending,
     isFetching: isMovieFetching,
-  } = useQuery(genresQueryOptions(type, StaticRequest.baseRequest));
+  } = useSuspenseQuery(genresQueryOptions(type, StaticRequest.baseRequest));
 
   useEffect(() => {
     if (!genreData) {
@@ -49,7 +49,7 @@ const SearchTag = () => {
       </div>
 
       <div className='sp-filter-row'>
-        {genreData?.data.genres.map((g) => (
+        {genreData.data.genres.map((g) => (
           <button
             key={`filter-tab-${g.id}`}
             className={`sp-filter-chip ${activeGenreFilter?.id === g.id ? 'active' : ''}`}
@@ -66,7 +66,7 @@ const SearchTag = () => {
         <ListSkeleton />
       ) : (
         <div className='sp-poster-grid'>
-          {data?.data.results.map((content) => (
+          {data.data.results.map((content) => (
             <Link to={`/contents/${content.title ? 'movie' : 'tv'}/${content.id}`}>
               <CardPoster
                 key={`search-tag-${content.id}`}

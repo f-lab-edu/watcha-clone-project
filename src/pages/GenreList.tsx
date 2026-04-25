@@ -1,7 +1,7 @@
 import StaticRequest from '@api/dto/staticRequest';
 import { genresQueryOptions } from '@api/hooks/videoQueries';
 import NotFound from '@pages/NotFound';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router';
 import { getPatterBackGround } from 'src/utils/style.util';
 
@@ -13,7 +13,7 @@ const GenreList = () => {
     data: genresData,
     isPending,
     isFetching,
-  } = useQuery(genresQueryOptions(type as 'movie' | 'tv', StaticRequest.baseRequest));
+  } = useSuspenseQuery(genresQueryOptions(type as 'movie' | 'tv', StaticRequest.baseRequest));
 
   if (type !== 'movie' && type !== 'tv') {
     return <NotFound type='404' />;
@@ -23,7 +23,7 @@ const GenreList = () => {
     <div className='ga-root'>
       <h1 className='ga-title'>{type === 'movie' ? '비디오' : 'TV'} 장르</h1>
       <div className='ga-grid'>
-        {genresData?.data.genres.map((g, index) => (
+        {genresData.data.genres.map((g, index) => (
           <div
             key={`search-genre-list-${type}-${g.id}`}
             className='ga-card'

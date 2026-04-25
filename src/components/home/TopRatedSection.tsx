@@ -3,7 +3,7 @@ import { topRatedQueryOptions } from '@api/hooks/movieQueries';
 import Carousel from '@components/Carousel/Carousel';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
 import CarouselSection from '@components/swiper/CarouselSection';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import CardPoster from './CardPoster';
 
@@ -12,8 +12,8 @@ const TopRatedSection = () => {
     data: topRatedData,
     isPending,
     isFetching,
-  } = useQuery(topRatedQueryOptions(StaticRequest.baseRequest));
-  const contents = topRatedData?.data.results ?? [];
+  } = useSuspenseQuery(topRatedQueryOptions(StaticRequest.baseRequest));
+  const contents = topRatedData.data.results ?? [];
 
   if (isPending || isFetching) {
     return <ListSkeleton />;

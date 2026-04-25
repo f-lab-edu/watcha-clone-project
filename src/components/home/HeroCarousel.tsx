@@ -2,7 +2,7 @@ import StaticRequest from '@api/dto/staticRequest';
 import { nowPlayingQueryOptions } from '@api/hooks/movieQueries';
 import Carousel from '@components/Carousel/Carousel';
 import HeroCarouselSkeleton from '@components/skeleton/HeroCarouselSkeleton';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 
 const HeroCarousel = () => {
@@ -10,8 +10,8 @@ const HeroCarousel = () => {
     data: heroData,
     isPending,
     isFetching,
-  } = useQuery(nowPlayingQueryOptions(StaticRequest.baseRequest));
-  const contents = heroData?.data.results ?? [];
+  } = useSuspenseQuery(nowPlayingQueryOptions(StaticRequest.baseRequest));
+  const contents = heroData.data.results ?? [];
 
   if (isPending || isFetching) {
     return <HeroCarouselSkeleton />;

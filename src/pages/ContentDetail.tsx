@@ -2,7 +2,7 @@ import StaticRequest from '@api/dto/staticRequest';
 import { movieDetailQueryOptions } from '@api/hooks/movieQueries';
 import ContentInfoTab from '@components/content/ContentInfoTab';
 import RelatedTab from '@components/content/detail/RelatedContentSection';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
@@ -20,7 +20,7 @@ const ContentDetail = () => {
     return <NotFound type='ERROR' />;
   }
 
-  const { data, isPending, isError, isFetching } = useQuery(
+  const { data, isPending, isError, isFetching } = useSuspenseQuery(
     mediaType === 'movie'
       ? movieDetailQueryOptions(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest)
       : tvDetailQueryOptions(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
@@ -46,7 +46,7 @@ const ContentDetail = () => {
       ) : (
         <div className='page'>
           {/* 히어로 */}
-          {data?.data && (
+          {data.data && (
             <div className='detail-hero'>
               <div
                 className='detail-hero-bg'

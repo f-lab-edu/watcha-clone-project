@@ -1,9 +1,9 @@
-import { useQueries } from '@tanstack/react-query';
+import { useSuspenseQueries } from '@tanstack/react-query';
 
 import { SearchRequest } from '../dto/searchRequest';
 import { movieListByGenreQueryOptions } from './movieQueries';
 
-export const useMovieListByGenre = (genreIds: number[], req: SearchRequest) => useQueries({
+export const useMovieListByGenre = (genreIds: number[], req: SearchRequest) => useSuspenseQueries({
   queries: genreIds.map(id => ({ ...movieListByGenreQueryOptions(id, req), enabled: genreIds.length > 0 })),
   combine: (results) => {
     return {

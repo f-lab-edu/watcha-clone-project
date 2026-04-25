@@ -4,14 +4,14 @@ import TopRatedSection from '@components/home/TopRatedSection';
 
 const Home = () => {
   return (
-    <div className='page'>
+    <main className='page'>
       {/* Hero */}
       <HeroCarousel />
       {/* 랭킹 */}
       <TopRatedSection />
       {/* 장르별 영화 */}
       <MovieGenreList />
-    </div>
+    </main>
   );
 };
 export default Home;

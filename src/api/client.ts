@@ -20,9 +20,8 @@ const removeEmptyParams = (params: any) => {
 }
 
 export const client = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.API_BASE_URL,
   timeout: 10000,
-  withCredentials: true,
   headers: {
     accept: 'application/json',
     Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`

@@ -1,16 +1,17 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { movieQueries } from '@api/hooks/movieQueries';
 import { useMovieListByGenre } from '@api/hooks/useMovies';
+import Carousel from '@components/Carousel/Carousel';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
-import SwiperSection from '@components/swiper/SwiperSection';
+import CarouselSection from '@components/swiper/CarouselSection';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
-import { SwiperSlide } from 'swiper/react';
+
+import { videoQueries } from '@api/hooks/videoQueries';
 import CardPoster from './CardPoster';
 
 const MovieGenreList = () => {
   const { data: genresData, isPending: isGenresPending } = useQuery(
-    movieQueries.genres(StaticRequest.baseRequest),
+    videoQueries.genres('movie', StaticRequest.baseRequest),
   );
   const genres = (genresData?.data.genres ?? []).slice(0, 5);
   const { data: movieList, isPending: isMovieListPending } = useMovieListByGenre(
@@ -27,17 +28,24 @@ const MovieGenreList = () => {
           {movieList.map(
             (list, id) =>
               list && (
-                <SwiperSection title={genres[id].name}>
-                  {list.map((m) => (
-                    <SwiperSlide
-                      key={`swiper-slide-${genres[id].name}-${m.id}`}
-                      className='swiper-slide'>
-                      <Link to={`/movie/${m.id}`}>
-                        <CardPoster img={`https://image.tmdb.org/t/p/w342${m.poster_path}`} />
+                <CarouselSection title={genres[id].name}>
+                  <Carousel
+                    breakpoints={{
+                      320: { slidesPerView: 2, slidesPerGroup: 2 },
+                      640: { slidesPerView: 3, slidesPerGroup: 3 },
+                      1024: { slidesPerView: 6, slidesPerGroup: 6 },
+                    }}
+                    gap={10}
+                    items={list.map((m) => (
+                      <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
+                        <CardPoster
+                          img={`https://image.tmdb.org/t/p/w342${m.poster_path}`}
+                          alt={`${genres[id].name}-genre-poster-${m.name}`}
+                        />
                       </Link>
-                    </SwiperSlide>
-                  ))}
-                </SwiperSection>
+                    ))}
+                  />
+                </CarouselSection>
               ),
           )}
         </>

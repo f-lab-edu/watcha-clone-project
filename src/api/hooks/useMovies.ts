@@ -12,5 +12,3 @@ export const useMovieListByGenre = (genreIds: number[], req: SearchRequest) => u
     }
   }
 });
-
-// export const useMovieDetail = (movieId: number, req: SearchRequest) => useQuery(movieQueries.movieDetail(movieId, req));

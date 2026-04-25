@@ -36,7 +36,10 @@ const TopRatedSection = () => {
               <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
                 <div className='rank-card'>
                   <div className='rank-number'>{i + 1}</div>
-                  <CardPoster img={`https://image.tmdb.org/t/p/w342${m.poster_path}`} />
+                  <CardPoster
+                    img={`https://image.tmdb.org/t/p/w342${m.poster_path}`}
+                    alt={`top-rated-poster-${m.name}`}
+                  />
                 </div>
               </Link>
             ))}

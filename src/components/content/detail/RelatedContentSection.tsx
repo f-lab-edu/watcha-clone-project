@@ -29,7 +29,11 @@ const RelatedTab = ({ movieId, type }: { movieId: number; type: 'movie' | 'tv' }
           .filter((m) => m.backdrop_path)
           .map((m) => (
             <Link to={`/contents/${m.title ? 'movie' : 'tv'}/${m.id}`}>
-              <CardPoster key={`related-${m.id}`} img={getImageUrl(m.poster_path, 'w300')} />
+              <CardPoster
+                key={`related-${m.id}`}
+                img={getImageUrl(m.poster_path, 'w300')}
+                alt={`related-card-poster-${m.name}`}
+              />
             </Link>
           ))}
     </div>

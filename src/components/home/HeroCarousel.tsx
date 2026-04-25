@@ -30,7 +30,7 @@ const HeroCarousel = () => {
                 <img
                   src={`https://image.tmdb.org/t/p/w1280${content.backdrop_path}`}
                   className='hero-img'
-                  alt={`hero-img-${content.name}`}
+                  alt={`hero-img-${content.title ? content.title : content.name}`}
                   fetchPriority={index === 0 ? 'high' : 'auto'}
                   loading={index === 0 ? 'eager' : 'lazy'}
                 />

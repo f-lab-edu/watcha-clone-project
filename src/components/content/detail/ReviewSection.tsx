@@ -1,5 +1,5 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { movieQueries } from '@api/hooks/movieQueries';
+import { reviewsQueryOptions } from '@api/hooks/movieQueries';
 import { useQuery } from '@tanstack/react-query';
 
 const ReviewSection = ({ movieId }: { movieId: number }) => {
@@ -7,7 +7,7 @@ const ReviewSection = ({ movieId }: { movieId: number }) => {
     data: reviews,
     isPending,
     isError,
-  } = useQuery(movieQueries.reviews(movieId, StaticRequest.baseRequest));
+  } = useQuery(reviewsQueryOptions(movieId, StaticRequest.baseRequest));
   return (
     <div className='rv-section'>
       <div className='rv-header'>

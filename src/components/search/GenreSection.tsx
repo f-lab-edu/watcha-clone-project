@@ -1,5 +1,5 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { genresQueryOptions } from '@api/hooks/videoQueries';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import GenreCarousel from './GenreCarousel';
@@ -9,12 +9,12 @@ const GenreSection = () => {
     data: movieData,
     isPending: isMoviePending,
     isFetching: isMovieFetching,
-  } = useQuery(videoQueries.genres('movie', StaticRequest.baseRequest));
+  } = useQuery(genresQueryOptions('movie', StaticRequest.baseRequest));
   const {
     data: tvData,
     isPending: isTvPending,
     isFetching: isTvFetching,
-  } = useQuery(videoQueries.genres('tv', StaticRequest.baseRequest));
+  } = useQuery(genresQueryOptions('tv', StaticRequest.baseRequest));
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { trendingQueryOptions } from '@api/hooks/videoQueries';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 
@@ -17,7 +17,7 @@ const POPULAR_KEYWORDS = [
 ];
 
 const TodayTrend = () => {
-  const { data } = useQuery(videoQueries.trending(StaticRequest.baseRequest));
+  const { data } = useQuery(trendingQueryOptions(StaticRequest.baseRequest));
   const trendList = data?.data?.results ?? [];
 
   if (!trendList || trendList.length === 0) {

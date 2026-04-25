@@ -32,7 +32,7 @@ export const reviewsQueryOptions = (movieId: number, req: SearchRequest) => quer
   queryFn: () => getMovieReviews(movieId, req),
   enabled: movieId > 0
 })
-export const similarQueryOptions = (movieId: number, req: SearchRequest) => queryOptions({
+export const movieSimilarQueryOptions = (movieId: number, req: SearchRequest) => queryOptions({
   queryKey: [...movieKeys.lists(), 'similar', movieId, { req }],
   queryFn: () => getSimilarMovies(movieId, req),
   enabled: movieId > 0

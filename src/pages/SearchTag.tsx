@@ -1,5 +1,5 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { contentListByGenreQueryOptions, genresQueryOptions } from '@api/hooks/videoQueries';
 import CardPoster from '@components/home/CardPoster';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
 import { useQuery } from '@tanstack/react-query';
@@ -18,14 +18,14 @@ const SearchTag = () => {
 
   // TODO 무한 스크롤
   const { data, isPending, isFetching, isError } = useQuery(
-    videoQueries.contentListByGenre(type, genreId, StaticRequest.baseRequest),
+    contentListByGenreQueryOptions(type, genreId, StaticRequest.baseRequest),
   );
 
   const {
     data: genreData,
     isPending: isMoviePending,
     isFetching: isMovieFetching,
-  } = useQuery(videoQueries.genres(type, StaticRequest.baseRequest));
+  } = useQuery(genresQueryOptions(type, StaticRequest.baseRequest));
 
   useEffect(() => {
     if (!genreData) {

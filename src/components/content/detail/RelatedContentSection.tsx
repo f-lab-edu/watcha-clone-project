@@ -1,6 +1,6 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { movieQueries } from '@api/hooks/movieQueries';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { movieSimilarQueryOptions } from '@api/hooks/movieQueries';
+import { videoSimilarQueryOptions } from '@api/hooks/videoQueries';
 import CardPoster from '@components/home/CardPoster';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
 import { useQuery } from '@tanstack/react-query';
@@ -14,8 +14,8 @@ const RelatedTab = ({ movieId, type }: { movieId: number; type: 'movie' | 'tv' }
     isFetching,
   } = useQuery(
     type === 'movie'
-      ? movieQueries.similar(movieId, StaticRequest.baseRequest)
-      : videoQueries.similar(movieId, StaticRequest.baseRequest),
+      ? movieSimilarQueryOptions(movieId, StaticRequest.baseRequest)
+      : videoSimilarQueryOptions(movieId, StaticRequest.baseRequest),
   );
 
   if (isPending || isFetching) {

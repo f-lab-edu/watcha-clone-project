@@ -1,5 +1,5 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { searchQueryOptions } from '@api/hooks/videoQueries';
 import GenreSection from '@components/search/GenreSection';
 import TodayTrend from '@components/search/TodayTrend';
 import { useQuery } from '@tanstack/react-query';
@@ -21,7 +21,7 @@ const Search = () => {
   };
 
   const debouncedQuery = useDebounce<string>(query, 300);
-  const { data } = useQuery(videoQueries.search(debouncedQuery, StaticRequest.baseRequest));
+  const { data } = useQuery(searchQueryOptions(debouncedQuery, StaticRequest.baseRequest));
 
   const handleSearchNavigation = (result: Content) => {
     if (result.media_type === 'person') {

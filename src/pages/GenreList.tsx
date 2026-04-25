@@ -1,5 +1,5 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { genresQueryOptions } from '@api/hooks/videoQueries';
 import NotFound from '@pages/NotFound';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router';
@@ -13,7 +13,7 @@ const GenreList = () => {
     data: genresData,
     isPending,
     isFetching,
-  } = useQuery(videoQueries.genres(type as 'movie' | 'tv', StaticRequest.baseRequest));
+  } = useQuery(genresQueryOptions(type as 'movie' | 'tv', StaticRequest.baseRequest));
 
   if (type !== 'movie' && type !== 'tv') {
     return <NotFound type='404' />;

@@ -6,12 +6,12 @@ import CarouselSection from '@components/swiper/CarouselSection';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 
-import { videoQueries } from '@api/hooks/videoQueries';
+import { genresQueryOptions } from '@api/hooks/videoQueries';
 import CardPoster from './CardPoster';
 
 const MovieGenreList = () => {
   const { data: genresData, isPending: isGenresPending } = useQuery(
-    videoQueries.genres('movie', StaticRequest.baseRequest),
+    genresQueryOptions('movie', StaticRequest.baseRequest),
   );
   const genres = (genresData?.data.genres ?? []).slice(0, 5);
   const { data: movieList, isPending: isMovieListPending } = useMovieListByGenre(

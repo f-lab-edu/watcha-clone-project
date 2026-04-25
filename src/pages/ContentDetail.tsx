@@ -1,5 +1,5 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { movieQueries } from '@api/hooks/movieQueries';
+import { movieDetailQueryOptions } from '@api/hooks/movieQueries';
 import ContentInfoTab from '@components/content/ContentInfoTab';
 import RelatedTab from '@components/content/detail/RelatedContentSection';
 import { useQuery } from '@tanstack/react-query';
@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
 
-import { videoQueries } from '@api/hooks/videoQueries';
+import { tvDetailQueryOptions } from '@api/hooks/videoQueries';
 import { useModal } from '@components/modal/ModalContext';
 import NotFound from './NotFound';
 
@@ -22,8 +22,8 @@ const ContentDetail = () => {
 
   const { data, isPending, isError, isFetching } = useQuery(
     mediaType === 'movie'
-      ? movieQueries.movieDetail(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest)
-      : videoQueries.tvDetail(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
+      ? movieDetailQueryOptions(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest)
+      : tvDetailQueryOptions(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
   );
 
   const { openModal } = useModal();

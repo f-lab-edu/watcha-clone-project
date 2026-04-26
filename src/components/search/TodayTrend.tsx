@@ -1,6 +1,6 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
-import { useQuery } from '@tanstack/react-query';
+import { trendingQueryOptions } from '@api/hooks/videoQueries';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 
 const POPULAR_KEYWORDS = [
@@ -17,8 +17,8 @@ const POPULAR_KEYWORDS = [
 ];
 
 const TodayTrend = () => {
-  const { data } = useQuery(videoQueries.trending(StaticRequest.baseRequest));
-  const trendList = data?.data?.results ?? [];
+  const { data } = useSuspenseQuery(trendingQueryOptions(StaticRequest.baseRequest));
+  const trendList = data.results ?? [];
 
   if (!trendList || trendList.length === 0) {
     return null;
@@ -34,9 +34,7 @@ const TodayTrend = () => {
         {/* 왼쪽 열: 1~5 */}
         <div>
           {trendList.slice(0, 5).map((t, index) => (
-            <Link
-              to={`/contents/${t.title ? 'movie' : 'tv'}/${t.id}`}
-              key={`trend-rank-${index}-${t.id}`}>
+            <Link to={`/contents/${t.title ? 'movie' : 'tv'}/${t.id}`} key={`trend-rank-${t.id}`}>
               <div className='sp-keyword-item'>
                 <span className={`sp-keyword-rank top`}>{index + 1}</span>
                 <span className='sp-keyword-title'>
@@ -51,7 +49,7 @@ const TodayTrend = () => {
         <div>
           {trendList.slice(5, 10).map((t, index) => (
             <Link to={`/contents/${t.title ? 'movie' : 'tv'}/${t.id}`}>
-              <div key={`trend-rank-${index}-${t.id}`} className='sp-keyword-item'>
+              <div key={`trend-rank-${t.id}`} className='sp-keyword-item'>
                 <span className={`sp-keyword-rank top`}>{index + 6}</span>
                 <span className='sp-keyword-title'>
                   {t.media_type === 'movie' ? t.title : t.name}

@@ -1,8 +1,7 @@
 import Home from '@pages/Home';
 import NotFound from '@pages/NotFound';
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router';
-import { RouterProvider } from 'react-router/dom';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import Default from '../components/layout/Default';
 

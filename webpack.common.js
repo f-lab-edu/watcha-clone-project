@@ -27,6 +27,10 @@ module.exports = {
         exclude: /node_modules/,
         use: "babel-loader", // Babel을 사용하여 최신 JavaScript 및 TypeScript를 구버전 브라우저에서도 호환되도록 변환
       },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|webp)$/i,
+        type: 'asset/resource', // Webpack 5
+      },
     ],
   },
 }

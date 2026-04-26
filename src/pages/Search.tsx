@@ -1,8 +1,8 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { searchQueryOptions } from '@api/hooks/videoQueries';
 import GenreSection from '@components/search/GenreSection';
 import TodayTrend from '@components/search/TodayTrend';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import useDebounce from 'src/hooks/useDebounce';
@@ -21,7 +21,7 @@ const Search = () => {
   };
 
   const debouncedQuery = useDebounce<string>(query, 300);
-  const { data } = useQuery(videoQueries.search(debouncedQuery, StaticRequest.baseRequest));
+  const { data } = useSuspenseQuery(searchQueryOptions(debouncedQuery, StaticRequest.baseRequest));
 
   const handleSearchNavigation = (result: Content) => {
     if (result.media_type === 'person') {
@@ -59,7 +59,7 @@ const Search = () => {
         {/* TODO person일경우 처리 필요 */}
         {debouncedQuery ? (
           <div className='sp-result-list sp-fade'>
-            {data?.data.results.length === 0 ? (
+            {data.results.length === 0 ? (
               <div className='sp-empty'>
                 <p className='sp-empty-text'>검색 결과가 없습니다</p>
                 <br />
@@ -67,7 +67,7 @@ const Search = () => {
               </div>
             ) : (
               <>
-                {data?.data.results.map((result) => (
+                {data.results.map((result) => (
                   <Link to={`/contents/${result.media_type}/${result.id}`}>
                     <div
                       key={`search-result-${result.id}`}

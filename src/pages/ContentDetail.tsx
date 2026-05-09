@@ -3,7 +3,7 @@ import { movieDetailQueryOptions } from '@api/hooks/movieQueries';
 import ContentInfoTab from '@components/content/ContentInfoTab';
 import RelatedTab from '@components/content/detail/RelatedContentSection';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { Activity, Suspense, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { getBackgroundImage, getImageUrl } from 'src/utils/image.util';
 import { getRunningTimeToString } from 'src/utils/time.util';
@@ -11,9 +11,15 @@ import { getRunningTimeToString } from 'src/utils/time.util';
 import { tvDetailQueryOptions } from '@api/hooks/videoQueries';
 import ImageComp from '@components/image/ImageComp';
 import { useModal } from '@components/modal/ModalContext';
+import ListSkeleton from '@components/skeleton/ListSkeleton';
 import NotFound from './NotFound';
 
-type Tab = '콘텐츠 정보' | '관련 콘텐츠';
+const CONTENT_TAB_TYPE = {
+  INFO: '콘텐츠 정보',
+  RELATED: '관련 콘텐츠',
+} as const;
+
+type ContentTabValue = (typeof CONTENT_TAB_TYPE)[keyof typeof CONTENT_TAB_TYPE];
 
 const ContentDetail = () => {
   const { id, mediaType } = useParams();
@@ -21,14 +27,14 @@ const ContentDetail = () => {
     return <NotFound type='ERROR' />;
   }
 
-  const { data, isPending, isFetching } = useSuspenseQuery(
+  const { data } = useSuspenseQuery(
     mediaType === 'movie'
       ? movieDetailQueryOptions(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest)
       : tvDetailQueryOptions(Number.isNaN(id) ? -1 : Number(id), StaticRequest.baseRequest),
   );
 
   const { openModal } = useModal();
-  const [tab, setTab] = useState<Tab>('콘텐츠 정보');
+  const [tab, setTab] = useState<ContentTabValue>(CONTENT_TAB_TYPE.INFO);
   const handleModal = () =>
     openModal({
       title: '왓챠를 시작해보세요',
@@ -36,7 +42,7 @@ const ContentDetail = () => {
     });
 
   useEffect(() => {
-    setTab('콘텐츠 정보');
+    setTab(CONTENT_TAB_TYPE.INFO);
   }, [id]);
 
   return (
@@ -134,7 +140,7 @@ const ContentDetail = () => {
 
       {/* 탭 */}
       <div className='detail-tabs'>
-        {(['콘텐츠 정보', '관련 콘텐츠'] as Tab[]).map((t) => (
+        {[CONTENT_TAB_TYPE.INFO, CONTENT_TAB_TYPE.RELATED].map((t) => (
           <button
             key={t}
             className={`detail-tab ${tab === t ? 'active' : ''}`}
@@ -147,8 +153,14 @@ const ContentDetail = () => {
       {/* 탭 콘텐츠 */}
       {data.id && (
         <div className='tab-content'>
-          {tab === '콘텐츠 정보' && <ContentInfoTab credits={data.credits ?? []} />}
-          {tab === '관련 콘텐츠' && <RelatedTab movieId={data.id} type={mediaType} />}
+          <Activity mode={tab === CONTENT_TAB_TYPE.INFO ? 'visible' : 'hidden'}>
+            <ContentInfoTab credits={data.credits ?? []} />
+          </Activity>
+          <Activity mode={tab === CONTENT_TAB_TYPE.RELATED ? 'visible' : 'hidden'}>
+            <Suspense fallback={<ListSkeleton />}>
+              <RelatedTab movieId={data.id} type={mediaType} />
+            </Suspense>
+          </Activity>
         </div>
       )}
     </div>

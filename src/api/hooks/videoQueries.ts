@@ -33,7 +33,9 @@ export const tvDetailQueryOptions = (tvId: number, req: SearchRequest) => queryO
 export const videoSimilarQueryOptions = (tvId: number, req: SearchRequest) => queryOptions({
   queryKey: [...videoKeys.lists(), 'similar', tvId, { req }],
   queryFn: () => getSimilarTvList(tvId, req),
-  enabled: tvId > 0
+  enabled: tvId > 0,
+  staleTime: 1000 * 60 * 5,
+  gcTime: 1000 * 60 * 10,
 });
 
 export const searchQueryOptions = (keyword: string, req: SearchRequest) => queryOptions({

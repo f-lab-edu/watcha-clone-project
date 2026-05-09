@@ -35,5 +35,7 @@ export const reviewsQueryOptions = (movieId: number, req: SearchRequest) => quer
 export const movieSimilarQueryOptions = (movieId: number, req: SearchRequest) => queryOptions({
   queryKey: [...movieKeys.lists(), 'similar', movieId, { req }],
   queryFn: () => getSimilarMovies(movieId, req),
-  enabled: movieId > 0
+  enabled: movieId > 0,
+  staleTime: 1000 * 60 * 5,
+  gcTime: 1000 * 60 * 10,
 })

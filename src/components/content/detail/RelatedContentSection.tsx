@@ -2,25 +2,16 @@ import StaticRequest from '@api/dto/staticRequest';
 import { movieSimilarQueryOptions } from '@api/hooks/movieQueries';
 import { videoSimilarQueryOptions } from '@api/hooks/videoQueries';
 import CardPoster from '@components/home/CardPoster';
-import ListSkeleton from '@components/skeleton/ListSkeleton';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { getImageUrl } from 'src/utils/image.util';
 
 const RelatedTab = ({ movieId, type }: { movieId: number; type: 'movie' | 'tv' }) => {
-  const {
-    data: relatedData,
-    isPending,
-    isFetching,
-  } = useSuspenseQuery(
+  const { data: relatedData } = useSuspenseQuery(
     type === 'movie'
       ? movieSimilarQueryOptions(movieId, StaticRequest.baseRequest)
       : videoSimilarQueryOptions(movieId, StaticRequest.baseRequest),
   );
-
-  if (isPending || isFetching) {
-    return <ListSkeleton />;
-  }
 
   return (
     <div className='related-grid'>

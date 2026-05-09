@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 // 공통 응답 구조
 export interface ApiResponse<T> {
@@ -8,11 +8,11 @@ export interface ApiResponse<T> {
 }
 
 interface CustomInstance extends Omit<AxiosInstance, 'get' | 'post' | 'put' | 'delete' | 'patch'> {
-  get<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
-  post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
-  put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
-  delete<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
-  patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
+  get<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>;
+  post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>;
+  put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>;
+  delete<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>;
+  patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>;
 }
 
 
@@ -33,7 +33,8 @@ export const client = axios.create({
   headers: {
     accept: 'application/json',
     Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`
-  }
+  },
+  params: { language: 'ko-kr' }
 }) as CustomInstance;
 
 client.interceptors.request.use(
@@ -41,8 +42,4 @@ client.interceptors.request.use(
     const removedParams = { ...removeEmptyParams(config.params) }
     return { ...config, params: removedParams }
   }
-)
-
-client.interceptors.response.use(
-  response => response.data
 )

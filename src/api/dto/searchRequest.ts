@@ -1,4 +1,4 @@
 export class SearchRequest {
-  language: string = 'ko-kr';
+  // language: string = 'ko-kr';
   page: number = 1;
 }

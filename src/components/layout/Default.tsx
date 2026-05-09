@@ -2,19 +2,19 @@ import LoadingSkeleton from '@components/skeleton/LoadingSkeleton';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import '../../assets/css/common.css';
-import ErrorBoundary from './ErrorBoundary';
 import Header from './Header';
+import { GlobalErrorBoundary } from './error-boundary/GlobalErrorBoundary';
 
 const Default = () => {
   return (
-    <div className='app'>
-      <Header />
-      <ErrorBoundary>
+    <GlobalErrorBoundary>
+      <div className='app'>
+        <Header />
         <Suspense fallback={<LoadingSkeleton />}>
           <Outlet />
         </Suspense>
-      </ErrorBoundary>
-    </div>
+      </div>
+    </GlobalErrorBoundary>
   );
 };
 

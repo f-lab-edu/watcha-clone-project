@@ -15,9 +15,18 @@ const route = createBrowserRouter([
     path: '/',
     element: <Default />,
     children: [
-      { index: true, element: <Home /> },
-      { path: 'contents/:mediaType/:id', element: <ContentDetail /> },
-      { path: 'search', element: <Search /> },
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: 'contents/:mediaType/:id',
+        element: <ContentDetail />,
+      },
+      {
+        path: 'search',
+        element: <Search />,
+      },
       { path: 'genre/:type', element: <GenreList /> },
       { path: 'tag', element: <SearchTag /> },
       { path: '*', element: <NotFound /> },

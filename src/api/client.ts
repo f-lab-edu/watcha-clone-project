@@ -43,3 +43,7 @@ client.interceptors.request.use(
     return { ...config, params: removedParams }
   }
 )
+
+client.interceptors.response.use(resp => resp, (error) => {
+  return Promise.reject(error);
+})

@@ -10,6 +10,7 @@ import { getRunningTimeToString } from 'src/utils/time.util';
 
 import { tvDetailQueryOptions } from '@api/hooks/videoQueries';
 import ImageComp from '@components/image/ImageComp';
+import WidgetErrorBoundary from '@components/layout/error-boundary/WidgetErrorBoundary';
 import { useModal } from '@components/modal/ModalContext';
 import ListSkeleton from '@components/skeleton/ListSkeleton';
 import NotFound from './NotFound';
@@ -158,7 +159,9 @@ const ContentDetail = () => {
           </Activity>
           <Activity mode={tab === CONTENT_TAB_TYPE.RELATED ? 'visible' : 'hidden'}>
             <Suspense fallback={<ListSkeleton />}>
-              <RelatedTab movieId={data.id} type={mediaType} />
+              <WidgetErrorBoundary>
+                <RelatedTab movieId={data.id} type={mediaType} />
+              </WidgetErrorBoundary>
             </Suspense>
           </Activity>
         </div>

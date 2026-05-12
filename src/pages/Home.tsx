@@ -1,6 +1,7 @@
 import HeroCarousel from '@components/home/HeroCarousel';
 import MovieGenreList from '@components/home/MovieGenreList';
 import TopRatedSection from '@components/home/TopRatedSection';
+import WidgetErrorBoundary from '@components/layout/error-boundary/WidgetErrorBoundary';
 
 const Home = () => {
   return (
@@ -8,9 +9,13 @@ const Home = () => {
       {/* Hero */}
       <HeroCarousel />
       {/* 랭킹 */}
-      <TopRatedSection />
+      <WidgetErrorBoundary>
+        <TopRatedSection />
+      </WidgetErrorBoundary>
       {/* 장르별 영화 */}
-      <MovieGenreList />
+      <WidgetErrorBoundary>
+        <MovieGenreList />
+      </WidgetErrorBoundary>
     </main>
   );
 };

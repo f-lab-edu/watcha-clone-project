@@ -1,5 +1,6 @@
 import StaticRequest from '@api/dto/staticRequest';
 import { searchQueryOptions } from '@api/hooks/videoQueries';
+import WidgetErrorBoundary from '@components/layout/error-boundary/WidgetErrorBoundary';
 import GenreSection from '@components/search/GenreSection';
 import TodayTrend from '@components/search/TodayTrend';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -68,11 +69,10 @@ const Search = () => {
             ) : (
               <>
                 {data.results.map((result) => (
-                  <Link to={`/contents/${result.media_type}/${result.id}`}>
-                    <div
-                      key={`search-result-${result.id}`}
-                      className='sp-result-item'
-                      onClick={() => handleSearchNavigation(result)}>
+                  <Link
+                    key={`search-result-${result.id}`}
+                    to={`/contents/${result.media_type}/${result.id}`}>
+                    <div className='sp-result-item' onClick={() => handleSearchNavigation(result)}>
                       <div className='sp-result-thumb'>
                         <div
                           className='sp-result-thumb-img'
@@ -100,7 +100,9 @@ const Search = () => {
             {/* 인기 검색어 */}
             <TodayTrend />
             {/* 비디오 장르 */}
-            <GenreSection />
+            <WidgetErrorBoundary>
+              <GenreSection />
+            </WidgetErrorBoundary>
           </div>
         )}
       </div>

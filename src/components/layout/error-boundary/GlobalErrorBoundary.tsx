@@ -1,9 +1,8 @@
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-
 import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { useLocation, useNavigate } from 'react-router';
 
 const UnknownErrorPage = ({ onRetry }: { onRetry: () => void }) => (
   <div className='nf-root'>
@@ -32,13 +31,21 @@ const ForbiddenPage = ({ onGoBack, onHome }: { onGoBack: () => void; onHome: () 
   </div>
 );
 
-const NetworkErrorPage = ({ onRetry }: { onRetry: () => void }) => (
+const NetworkErrorPage = ({ onGoBack, onHome }: { onGoBack: () => void; onHome: () => void }) => (
   <div className='nf-root'>
-    <p className='nf-desc'>네트워크 오류가 발생했습니다.</p>
+    <h1 className='nf-title'>페이지를 불러오지 못했어요</h1>
+    <p className='nf-desc'>
+      일시적인 오류가 발생했거나
+      <br />
+      요청한 정보를 가져오지 못했어요.
+    </p>
 
     <div className='nf-buttons'>
-      <button className='nf-btn-primary' onClick={onRetry}>
+      <button className='nf-btn-primary' onClick={onGoBack}>
         다시 시도
+      </button>
+      <button className='nf-btn-secondary' onClick={onHome}>
+        홈으로
       </button>
     </div>
   </div>
@@ -46,6 +53,7 @@ const NetworkErrorPage = ({ onRetry }: { onRetry: () => void }) => (
 
 const GlobalErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { reset } = useQueryErrorResetBoundary();
 
   useEffect(() => {
@@ -74,7 +82,7 @@ const GlobalErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
       return <ForbiddenPage onGoBack={() => navigate(-1)} onHome={() => navigate('/')} />;
     }
 
-    return <NetworkErrorPage onRetry={handleRetry} />;
+    return <NetworkErrorPage onGoBack={() => navigate(-1)} onHome={() => navigate('/')} />;
   }
 
   return <UnknownErrorPage onRetry={handleRetry} />;

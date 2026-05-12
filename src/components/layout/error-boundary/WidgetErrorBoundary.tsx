@@ -1,6 +1,7 @@
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { useLocation } from 'react-router';
 
 const DefaultWidgetErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const { reset } = useQueryErrorResetBoundary();
@@ -42,7 +43,21 @@ const DefaultWidgetErrorFallback = ({ error, resetErrorBoundary }: FallbackProps
 };
 
 const WidgetErrorBoundary = ({ children }: React.PropsWithChildren) => {
-  return <ErrorBoundary FallbackComponent={DefaultWidgetErrorFallback}>{children}</ErrorBoundary>;
+  const { reset } = useQueryErrorResetBoundary();
+  const { pathname } = useLocation();
+
+  return (
+    <ErrorBoundary
+      FallbackComponent={DefaultWidgetErrorFallback}
+      resetKeys={[pathname]}
+      onReset={(details) => {
+        if (details.reason === 'keys') {
+          reset();
+        }
+      }}>
+      {children}
+    </ErrorBoundary>
+  );
 };
 
 export default WidgetErrorBoundary;

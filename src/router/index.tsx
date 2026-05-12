@@ -1,3 +1,4 @@
+import PageErrorBoundary from '@components/layout/error-boundary/PageErrorBoundary';
 import Home from '@pages/Home';
 import NotFound from '@pages/NotFound';
 import { lazy } from 'react';
@@ -17,18 +18,44 @@ const route = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <PageErrorBoundary>
+            <Home />
+          </PageErrorBoundary>
+        ),
       },
       {
         path: 'contents/:mediaType/:id',
-        element: <ContentDetail />,
+        element: (
+          <PageErrorBoundary>
+            <ContentDetail />
+          </PageErrorBoundary>
+        ),
       },
       {
         path: 'search',
-        element: <Search />,
+        element: (
+          <PageErrorBoundary>
+            <Search />
+          </PageErrorBoundary>
+        ),
       },
-      { path: 'genre/:type', element: <GenreList /> },
-      { path: 'tag', element: <SearchTag /> },
+      {
+        path: 'genre/:type',
+        element: (
+          <PageErrorBoundary>
+            <GenreList />
+          </PageErrorBoundary>
+        ),
+      },
+      {
+        path: 'tag',
+        element: (
+          <PageErrorBoundary>
+            <SearchTag />
+          </PageErrorBoundary>
+        ),
+      },
       { path: '*', element: <NotFound /> },
     ],
   },

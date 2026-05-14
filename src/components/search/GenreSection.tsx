@@ -2,19 +2,14 @@ import StaticRequest from '@api/dto/staticRequest';
 import { genresQueryOptions } from '@api/hooks/videoQueries';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
+
 import GenreCarousel from './GenreCarousel';
 
 const GenreSection = () => {
-  const {
-    data: movieData,
-    isPending: isMoviePending,
-    isFetching: isMovieFetching,
-  } = useSuspenseQuery(genresQueryOptions('movie', StaticRequest.baseRequest));
-  const {
-    data: tvData,
-    isPending: isTvPending,
-    isFetching: isTvFetching,
-  } = useSuspenseQuery(genresQueryOptions('tv', StaticRequest.baseRequest));
+  const { data: movieData } = useSuspenseQuery(
+    genresQueryOptions('movie', StaticRequest.baseRequest),
+  );
+  const { data: tvData } = useSuspenseQuery(genresQueryOptions('tv', StaticRequest.baseRequest));
 
   return (
     <div>

@@ -1,5 +1,8 @@
 import { overlay } from 'overlay-kit';
-import { createContext, useCallback, useContext, useMemo } from 'react';
+import { createContext, use } from 'react';
+
+import type { ReactNode } from 'react';
+
 import Modal from './Modal';
 
 export type ModalState = {
@@ -14,8 +17,8 @@ type ModalContextType = {
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
-export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-  const openModal = useCallback((init: ModalState) => {
+export const ModalProvider = ({ children }: { children: ReactNode }) => {
+  const openModal = (init: ModalState) => {
     overlay.open(({ isOpen, close, unmount }) => (
       <Modal
         isOpen={isOpen}
@@ -26,15 +29,13 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         onOk={init.onOk ?? close}
       />
     ));
-  }, []);
+  };
 
-  const value = useMemo(() => ({ openModal }), [openModal]);
-
-  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
+  return <ModalContext value={{ openModal }}>{children}</ModalContext>;
 };
 
 export const useModal = () => {
-  const context = useContext(ModalContext);
+  const context = use(ModalContext);
   if (!context) {
     throw new Error('ModalProvider와 함께 사용해주세요');
   }

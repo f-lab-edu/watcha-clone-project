@@ -1,21 +1,12 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { movieQueries } from '@api/hooks/movieQueries';
+import { nowPlayingQueryOptions } from '@api/hooks/movieQueries';
 import Carousel from '@components/Carousel/Carousel';
-import HeroCarouselSkeleton from '@components/skeleton/HeroCarouselSkeleton';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 
 const HeroCarousel = () => {
-  const {
-    data: heroData,
-    isPending,
-    isFetching,
-  } = useQuery(movieQueries.nowPlaying(StaticRequest.baseRequest));
-  const contents = heroData?.data.results ?? [];
-
-  if (isPending || isFetching) {
-    return <HeroCarouselSkeleton />;
-  }
+  const { data: heroData } = useSuspenseQuery(nowPlayingQueryOptions(StaticRequest.baseRequest));
+  const contents = heroData.results ?? [];
 
   return (
     <div className='carousel-section'>
@@ -26,7 +17,8 @@ const HeroCarousel = () => {
             <Link
               to={`/contents/${content.title ? 'movie' : 'tv'}/${content.id}`}
               style={{ cursor: 'pointer' }}>
-              <div key={`hero-swiper-${content.id}`} className='hero'>
+              <div className='hero'>
+                {/* TODO ImageComp로 교체 필요 */}
                 <img
                   src={`https://image.tmdb.org/t/p/w1280${content.backdrop_path}`}
                   className='hero-img'

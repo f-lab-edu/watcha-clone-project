@@ -1,8 +1,8 @@
-import { createContext, useContext, useState } from 'react';
+import { overlay } from 'overlay-kit';
+import { createContext, useCallback, useContext, useMemo } from 'react';
 import Modal from './Modal';
 
-type ModalState = {
-  isOpen: boolean;
+export type ModalState = {
   title: string;
   desc: string;
   onOk?: (() => void) | null;
@@ -10,40 +10,27 @@ type ModalState = {
 
 type ModalContextType = {
   openModal: (init: ModalState) => void;
-  closeModal: () => void;
 };
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
-const INIT_STATE: ModalState = {
-  isOpen: false,
-  title: '',
-  desc: '',
-  onOk: null,
-};
-
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, setState] = useState<ModalState>({ ...INIT_STATE });
-
-  const openModal = (init: ModalState) => {
-    setState({ ...init });
-  };
-
-  const closeModal = () => {
-    setState({ ...INIT_STATE });
-  };
-
-  return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
-      {children}
+  const openModal = useCallback((init: ModalState) => {
+    overlay.open(({ isOpen, close, unmount }) => (
       <Modal
-        isOpen={state.isOpen}
-        onClose={closeModal}
-        title={state.title}
-        desc={state.desc}
-        onOk={state.onOk ?? closeModal}></Modal>
-    </ModalContext.Provider>
-  );
+        isOpen={isOpen}
+        onClose={close}
+        onExit={unmount}
+        title={init.title}
+        desc={init.desc}
+        onOk={init.onOk ?? close}
+      />
+    ));
+  }, []);
+
+  const value = useMemo(() => ({ openModal }), [openModal]);
+
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };
 
 export const useModal = () => {

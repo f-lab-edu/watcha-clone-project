@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 type ModalProps = {
   isOpen: boolean;
   title: string;
-  desc: string;
-  onOk: () => void;
+  desc?: string;
+  onOk?: () => void;
   onClose: () => void;
+  onExit?: () => void;
 };
 
-const Modal = ({ isOpen, title, desc, onOk, onClose }: ModalProps) => {
+const Modal = ({ isOpen, title, desc, onOk, onClose, onExit }: ModalProps) => {
+  const wasOpenRef = useRef(false);
+
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -21,12 +24,17 @@ const Modal = ({ isOpen, title, desc, onOk, onClose }: ModalProps) => {
       }
     };
 
-    if (document) {
-      document.addEventListener('keydown', handleKeyDown);
-    }
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (wasOpenRef.current && !isOpen) {
+      onExit?.();
+    }
+    wasOpenRef.current = isOpen;
+  }, [isOpen, onExit]);
 
   useEffect(() => {
     if (!document) {

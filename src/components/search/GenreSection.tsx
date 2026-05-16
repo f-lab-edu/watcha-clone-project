@@ -1,20 +1,15 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
-import { useQuery } from '@tanstack/react-query';
+import { genresQueryOptions } from '@api/hooks/videoQueries';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
+
 import GenreCarousel from './GenreCarousel';
 
 const GenreSection = () => {
-  const {
-    data: movieData,
-    isPending: isMoviePending,
-    isFetching: isMovieFetching,
-  } = useQuery(videoQueries.genres('movie', StaticRequest.baseRequest));
-  const {
-    data: tvData,
-    isPending: isTvPending,
-    isFetching: isTvFetching,
-  } = useQuery(videoQueries.genres('tv', StaticRequest.baseRequest));
+  const { data: movieData } = useSuspenseQuery(
+    genresQueryOptions('movie', StaticRequest.baseRequest),
+  );
+  const { data: tvData } = useSuspenseQuery(genresQueryOptions('tv', StaticRequest.baseRequest));
 
   return (
     <div>
@@ -25,7 +20,7 @@ const GenreSection = () => {
             모두 보기
           </Link>
         </div>
-        <GenreCarousel type='movie' items={movieData?.data.genres ?? []} ranDomIndex={10} />
+        <GenreCarousel type='movie' items={movieData.genres ?? []} ranDomIndex={10} />
       </div>
 
       <div className='sp-section'>
@@ -35,7 +30,7 @@ const GenreSection = () => {
             모두 보기
           </Link>
         </div>
-        <GenreCarousel type='tv' items={tvData?.data.genres ?? []} ranDomIndex={3} />
+        <GenreCarousel type='tv' items={tvData.genres ?? []} ranDomIndex={3} />
       </div>
     </div>
   );

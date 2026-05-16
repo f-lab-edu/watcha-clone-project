@@ -1,3 +1,4 @@
+import ImageComp from '@components/image/ImageComp';
 import { useState } from 'react';
 
 type CardPosterProps = {
@@ -11,13 +12,7 @@ const CardPoster = ({ img, alt }: CardPosterProps) => {
   return (
     <div className='card-poster'>
       {!imgLoaded && <div className='skeleton card-poster-skeleton' />}
-      <img
-        src={img}
-        alt={alt}
-        className='card-poster-img'
-        style={{ opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
-        onLoad={() => setImgLoaded(true)}
-      />
+      <ImageComp src={img} alt={alt} className='card-poster-img' />
       <div className='card-poster-overlay' />
     </div>
   );

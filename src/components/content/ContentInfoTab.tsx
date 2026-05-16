@@ -1,3 +1,4 @@
+import ImageComp from '@components/image/ImageComp';
 import { Credit } from 'src/types/credit';
 import { getImageUrl } from '../../utils/image.util';
 
@@ -22,7 +23,7 @@ const ContentInfoTab = ({ credits }: ContentInfoProps) => {
             {director && (
               <div className='cast-row'>
                 <div className='cast-avatar'>
-                  <img
+                  <ImageComp
                     src={
                       director.profile_path
                         ? getImageUrl(director.profile_path, 'w185')
@@ -41,7 +42,7 @@ const ContentInfoTab = ({ credits }: ContentInfoProps) => {
             {credits?.cast?.slice(0, 8).map((person) => (
               <div className='cast-row' key={person.id}>
                 <div className='cast-avatar'>
-                  <img
+                  <ImageComp
                     src={
                       person.profile_path
                         ? getImageUrl(person.profile_path, 'w185')

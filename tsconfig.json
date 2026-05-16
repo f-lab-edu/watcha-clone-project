@@ -24,5 +24,6 @@
     "compilerOptions": {
       "module": "CommonJS" // ts-node는 CJS로 실행
     }
-  }
+  },
+  "include": ["src", "global.d.ts"]
 }

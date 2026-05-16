@@ -1,9 +1,11 @@
 import StaticRequest from '@api/dto/staticRequest';
-import { videoQueries } from '@api/hooks/videoQueries';
+import { searchQueryOptions } from '@api/hooks/videoQueries';
+import WidgetErrorBoundary from '@components/layout/error-boundary/WidgetErrorBoundary';
 import GenreSection from '@components/search/GenreSection';
 import TodayTrend from '@components/search/TodayTrend';
-import { useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import ListSkeleton from '@components/skeleton/ListSkeleton';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Suspense, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import useDebounce from 'src/hooks/useDebounce';
 import { Content } from 'src/types/content';
@@ -13,15 +15,15 @@ const Search = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [query, setQuery] = useState('');
+  const [keyword, setKeyword] = useState('');
 
   const handleClear = () => {
-    setQuery('');
+    setKeyword('');
     inputRef.current?.focus();
   };
 
-  const debouncedQuery = useDebounce<string>(query, 300);
-  const { data } = useQuery(videoQueries.search(debouncedQuery, StaticRequest.baseRequest));
+  const debouncedQuery = useDebounce<string>(keyword, 300);
+  const { data } = useSuspenseQuery(searchQueryOptions(debouncedQuery, StaticRequest.baseRequest));
 
   const handleSearchNavigation = (result: Content) => {
     if (result.media_type === 'person') {
@@ -42,13 +44,13 @@ const Search = () => {
               ref={inputRef}
               className='sp-search-input'
               placeholder='콘텐츠, 태그, 인물 검색'
-              value={query}
+              value={keyword}
               onChange={(e) => {
-                setQuery(e.target.value);
+                setKeyword(e.target.value);
               }}
               autoFocus
             />
-            {query && (
+            {keyword && (
               <button className='sp-clear-btn' onClick={handleClear}>
                 ✕
               </button>
@@ -59,20 +61,21 @@ const Search = () => {
         {/* TODO person일경우 처리 필요 */}
         {debouncedQuery ? (
           <div className='sp-result-list sp-fade'>
-            {data?.data.results.length === 0 ? (
+            {data.results.length === 0 ? (
               <div className='sp-empty'>
                 <p className='sp-empty-text'>검색 결과가 없습니다</p>
                 <br />
-                <GenreSection />
+                <Suspense fallback={<ListSkeleton />}>
+                  <GenreSection />
+                </Suspense>
               </div>
             ) : (
               <>
-                {data?.data.results.map((result) => (
-                  <Link to={`/contents/${result.media_type}/${result.id}`}>
-                    <div
-                      key={`search-result-${result.id}`}
-                      className='sp-result-item'
-                      onClick={() => handleSearchNavigation(result)}>
+                {data.results.map((result) => (
+                  <Link
+                    key={`search-result-${result.id}`}
+                    to={`/contents/${result.media_type}/${result.id}`}>
+                    <div className='sp-result-item' onClick={() => handleSearchNavigation(result)}>
                       <div className='sp-result-thumb'>
                         <div
                           className='sp-result-thumb-img'
@@ -100,7 +103,11 @@ const Search = () => {
             {/* 인기 검색어 */}
             <TodayTrend />
             {/* 비디오 장르 */}
-            <GenreSection />
+            <WidgetErrorBoundary>
+              <Suspense fallback={<ListSkeleton />}>
+                <GenreSection />
+              </Suspense>
+            </WidgetErrorBoundary>
           </div>
         )}
       </div>

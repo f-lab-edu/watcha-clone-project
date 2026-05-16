@@ -1,8 +1,8 @@
+import PageErrorBoundary from '@components/layout/error-boundary/PageErrorBoundary';
 import Home from '@pages/Home';
 import NotFound from '@pages/NotFound';
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router';
-import { RouterProvider } from 'react-router/dom';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import Default from '../components/layout/Default';
 
@@ -16,11 +16,46 @@ const route = createBrowserRouter([
     path: '/',
     element: <Default />,
     children: [
-      { index: true, element: <Home /> },
-      { path: 'contents/:mediaType/:id', element: <ContentDetail /> },
-      { path: 'search', element: <Search /> },
-      { path: 'genre/:type', element: <GenreList /> },
-      { path: 'tag', element: <SearchTag /> },
+      {
+        index: true,
+        element: (
+          <PageErrorBoundary>
+            <Home />
+          </PageErrorBoundary>
+        ),
+      },
+      {
+        path: 'contents/:mediaType/:id',
+        element: (
+          <PageErrorBoundary>
+            <ContentDetail />
+          </PageErrorBoundary>
+        ),
+      },
+      {
+        path: 'search',
+        element: (
+          <PageErrorBoundary>
+            <Search />
+          </PageErrorBoundary>
+        ),
+      },
+      {
+        path: 'genre/:type',
+        element: (
+          <PageErrorBoundary>
+            <GenreList />
+          </PageErrorBoundary>
+        ),
+      },
+      {
+        path: 'tag',
+        element: (
+          <PageErrorBoundary>
+            <SearchTag />
+          </PageErrorBoundary>
+        ),
+      },
       { path: '*', element: <NotFound /> },
     ],
   },

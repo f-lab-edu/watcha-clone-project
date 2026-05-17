@@ -1,5 +1,5 @@
 import { overlay } from "overlay-kit";
-import { createContext, useContext } from "react";
+import { createContext, use } from "react";
 import Modal from "./Modal";
 
 export type ModalState = {
@@ -30,13 +30,11 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
   const value = { openModal };
 
-  return (
-    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
-  );
+  return <ModalContext value={value}>{children}</ModalContext>;
 };
 
 export const useModal = () => {
-  const context = useContext(ModalContext);
+  const context = use(ModalContext);
   if (!context) {
     throw new Error("ModalProvider와 함께 사용해주세요");
   }

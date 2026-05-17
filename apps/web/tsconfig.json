@@ -1,0 +1,15 @@
+{
+  "extends": "@watcha/tsconfig/react-app.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "allowJs": false,
+    "outDir": "./dist",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
+      "@assets/*": ["src/assets/*"],
+      "@utils/*": ["src/utils/*"]
+    }
+  },
+  "include": ["src", "global.d.ts"]
+}

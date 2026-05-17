@@ -1,0 +1,13 @@
+{
+  "name": "@watcha/tailwind-config",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./base.js",
+  "exports": {
+    ".": "./base.js"
+  },
+  "scripts": {
+    "build": "exit 0"
+  }
+}

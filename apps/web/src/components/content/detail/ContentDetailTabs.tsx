@@ -30,16 +30,16 @@ const ContentDetailTabs = ({ data, mediaType }: ContentDetailTabsProps) => {
 
       {data.id && (
         <div className='tab-content'>
-          <Activity mode={activeTab === CONTENT_TAB_TYPE.INFO ? 'visible' : 'hidden'}>
-            <ContentInfoTab credits={data.credits ?? []} />
-          </Activity>
-          <Activity mode={activeTab === CONTENT_TAB_TYPE.RELATED ? 'visible' : 'hidden'}>
-            <Suspense fallback={<ListSkeleton />}>
+          <Suspense fallback={<ListSkeleton />}>
+            <Activity mode={activeTab === CONTENT_TAB_TYPE.INFO ? 'visible' : 'hidden'}>
+              <ContentInfoTab credits={data.credits ?? []} />
+            </Activity>
+            <Activity mode={activeTab === CONTENT_TAB_TYPE.RELATED ? 'visible' : 'hidden'}>
               <WidgetErrorBoundary>
                 <RelatedTab movieId={data.id} type={mediaType} />
               </WidgetErrorBoundary>
-            </Suspense>
-          </Activity>
+            </Activity>
+          </Suspense>
         </div>
       )}
     </>

@@ -29,15 +29,13 @@ jobs:
 
       - name: Create env file
         run: |
-          echo "API_BASE_URL=${{ secrets.REACT_API_BASE_URL }}" >> .env.production
-          echo "API_KEY=${{ secrets.REACT_API_KEY }}" >> .env.production
-          echo "API_ACCESS_TOKEN=${{ secrets.REACT_API_ACCESS_TOKEN }}" >> .env.production
+          echo "API_KEY=${{ secrets.REACT_API_KEY }}" >> apps/web/.env.production
+          echo "API_ACCESS_TOKEN=${{ secrets.REACT_API_ACCESS_TOKEN }}" >> apps/web/.env.production
 
       - name: Build
         run: pnpm build:prod
         env:
           NODE_ENV: production
-          API_BASE_URL: ${{secrets.REACT_API_BASE_URL}}
           API_ACCESS_TOKEN: ${{secrets.REACT_API_ACCESS_TOKEN}}
           API_KEY: ${{secrets.REACT_API_KEY}}
 
@@ -50,14 +48,14 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} \
+          aws s3 sync apps/web/dist s3://${{ secrets.S3_BUCKET_NAME }} \
             --delete \
             --exclude "*.js" \
             --exclude "*.css" \
             --cache-control "no-cache, no-store, must-revalidate"
 
           # JS/CSS는 해시 포함이므로 장기 캐시 적용
-          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} \
+          aws s3 sync apps/web/dist s3://${{ secrets.S3_BUCKET_NAME }} \
             --delete \
             --exclude "*.html" \
             --cache-control "max-age=31536000"

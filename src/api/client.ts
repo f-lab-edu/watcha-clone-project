@@ -28,11 +28,11 @@ const removeEmptyParams = (params: any) => {
 }
 
 export const client = axios.create({
-  baseURL: process.env.API_BASE_URL,
+  baseURL: 'https://api.themoviedb.org',
   timeout: 10000,
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`
+    Authorization: `Bearer ${import.meta.env.VITE_API_ACCESS_TOKEN}`
   },
   params: { language: 'ko-kr' }
 }) as CustomInstance;

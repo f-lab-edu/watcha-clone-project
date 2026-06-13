@@ -5,9 +5,9 @@ import { Content, Genre, ReleaseInfo } from "../../types/content";
 export interface MovieListResponse {
   page: number;
   results: Content[];
-  dates: { maximum: string, minimum: string };
-  total_pages: number,
-  total_results: number
+  dates: { maximum: string; minimum: string };
+  total_pages: number;
+  total_results: number;
 }
 
 export interface GenreListResponse {
@@ -46,23 +46,23 @@ export interface MovieDetailResponse extends Content {
   tagline: string;
   release_dates: {
     results: {
-      "iso_3166_1": string,
-      "release_dates": ReleaseInfo[]
-    }[]
-  },
+      iso_3166_1: string;
+      release_dates: ReleaseInfo[];
+    }[];
+  };
   content_ratings: {
     results: {
-      descriptors: string[],
-      iso_3166_1: string,
-      rating: string
-    }[]
-  }
-  credits: Credit
+      descriptors: string[];
+      iso_3166_1: string;
+      rating: string;
+    }[];
+  };
+  credits: Credit;
   first_air_date: string;
 }
 
 export interface MovieReviewListResponse {
   id: number;
   page: number;
-  results: Review[]
+  results: Review[];
 }

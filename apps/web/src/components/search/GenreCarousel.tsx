@@ -1,11 +1,19 @@
-import Carousel from '@components/Carousel/Carousel';
-import { Link } from 'react-router';
-import { Genre } from 'src/types/content';
-import { getPatterBackGround } from 'src/utils/style.util';
+import Carousel from "@components/Carousel/Carousel";
+import { Link } from "react-router";
+import { Genre } from "src/types/content";
+import { getPatterBackGround } from "src/utils/style.util";
 
-type GenreCarouselProps = { type: 'movie' | 'tv'; items: Genre[]; ranDomIndex?: number };
+type GenreCarouselProps = {
+  type: "movie" | "tv";
+  items: Genre[];
+  ranDomIndex?: number;
+};
 
-const GenreCarousel = ({ type, items, ranDomIndex = 0 }: GenreCarouselProps) => {
+const GenreCarousel = ({
+  type,
+  items,
+  ranDomIndex = 0,
+}: GenreCarouselProps) => {
   return (
     <Carousel
       breakpoints={{
@@ -17,9 +25,12 @@ const GenreCarousel = ({ type, items, ranDomIndex = 0 }: GenreCarouselProps) => 
       gap={10}
       items={items.map((g) => (
         <Link to={`/tag?ids=${g.id}&type=${type}`}>
-          <div key={g.id} className='sp-genre-card'>
-            <div className='sp-genre-bg' style={getPatterBackGround(g.id + ranDomIndex)} />
-            <div className='sp-genre-label'>{g.name}</div>
+          <div key={g.id} className="sp-genre-card">
+            <div
+              className="sp-genre-bg"
+              style={getPatterBackGround(g.id + ranDomIndex)}
+            />
+            <div className="sp-genre-label">{g.name}</div>
           </div>
         </Link>
       ))}

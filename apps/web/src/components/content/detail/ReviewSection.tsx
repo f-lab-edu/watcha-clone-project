@@ -1,6 +1,6 @@
-import StaticRequest from '@api/dto/staticRequest';
-import { reviewsQueryOptions } from '@api/hooks/movieQueries';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import StaticRequest from "@api/dto/staticRequest";
+import { reviewsQueryOptions } from "@api/hooks/movieQueries";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const ReviewSection = ({ movieId }: { movieId: number }) => {
   const {
@@ -9,15 +9,15 @@ const ReviewSection = ({ movieId }: { movieId: number }) => {
     isError,
   } = useSuspenseQuery(reviewsQueryOptions(movieId, StaticRequest.baseRequest));
   return (
-    <div className='rv-section'>
-      <div className='rv-header'>
-        <div className='rv-title'>
+    <div className="rv-section">
+      <div className="rv-header">
+        <div className="rv-title">
           왓챠피디아 사용자 평
           {/* {totalCount !== undefined && (
                     <span className='rv-count'>{totalCount.toLocaleString()}+</span>
                   )} */}
         </div>
-        <button className='rv-more'>더보기</button>
+        <button className="rv-more">더보기</button>
       </div>
 
       {/* <div className='rv-list'>

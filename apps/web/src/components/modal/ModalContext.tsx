@@ -1,6 +1,6 @@
-import { overlay } from 'overlay-kit';
-import { createContext, useCallback, useContext, useMemo } from 'react';
-import Modal from './Modal';
+import { overlay } from "overlay-kit";
+import { createContext, useCallback, useContext, useMemo } from "react";
+import Modal from "./Modal";
 
 export type ModalState = {
   title: string;
@@ -30,13 +30,15 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
   const value = useMemo(() => ({ openModal }), [openModal]);
 
-  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
+  return (
+    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
+  );
 };
 
 export const useModal = () => {
   const context = useContext(ModalContext);
   if (!context) {
-    throw new Error('ModalProvider와 함께 사용해주세요');
+    throw new Error("ModalProvider와 함께 사용해주세요");
   }
 
   return context;

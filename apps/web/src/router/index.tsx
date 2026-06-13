@@ -1,19 +1,19 @@
-import PageErrorBoundary from '@components/layout/error-boundary/PageErrorBoundary';
-import Home from '@pages/Home';
-import NotFound from '@pages/NotFound';
-import { lazy } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import PageErrorBoundary from "@components/layout/error-boundary/PageErrorBoundary";
+import Home from "@pages/Home";
+import NotFound from "@pages/NotFound";
+import { lazy } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
-import Default from '../components/layout/Default';
+import Default from "../components/layout/Default";
 
-const ContentDetail = lazy(() => import('@pages/ContentDetail'));
-const Search = lazy(() => import('@pages/Search'));
-const GenreList = lazy(() => import('@pages/GenreList'));
-const SearchTag = lazy(() => import('@pages/SearchTag'));
+const ContentDetail = lazy(() => import("@pages/ContentDetail"));
+const Search = lazy(() => import("@pages/Search"));
+const GenreList = lazy(() => import("@pages/GenreList"));
+const SearchTag = lazy(() => import("@pages/SearchTag"));
 
 const route = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Default />,
     children: [
       {
@@ -25,7 +25,7 @@ const route = createBrowserRouter([
         ),
       },
       {
-        path: 'contents/:mediaType/:id',
+        path: "contents/:mediaType/:id",
         element: (
           <PageErrorBoundary>
             <ContentDetail />
@@ -33,7 +33,7 @@ const route = createBrowserRouter([
         ),
       },
       {
-        path: 'search',
+        path: "search",
         element: (
           <PageErrorBoundary>
             <Search />
@@ -41,7 +41,7 @@ const route = createBrowserRouter([
         ),
       },
       {
-        path: 'genre/:type',
+        path: "genre/:type",
         element: (
           <PageErrorBoundary>
             <GenreList />
@@ -49,14 +49,14 @@ const route = createBrowserRouter([
         ),
       },
       {
-        path: 'tag',
+        path: "tag",
         element: (
           <PageErrorBoundary>
             <SearchTag />
           </PageErrorBoundary>
         ),
       },
-      { path: '*', element: <NotFound /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);

@@ -1,9 +1,8 @@
 const StaticRequest = {
   baseRequest: {
-    language: 'ko-kr',
-    page: 1
-  }
+    language: "ko-kr",
+    page: 1,
+  },
+};
 
-}
-
-export default StaticRequest
+export default StaticRequest;

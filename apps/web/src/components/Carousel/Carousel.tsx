@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 const TRANSITION_DURATION = 300;
 
@@ -8,15 +8,17 @@ type Breakpoint = {
 };
 
 type CarouselProps = {
-  items: React.ReactNode[];
+  items: ReactNode[];
   loop?: boolean;
   delay?: number;
   breakpoints?: Record<number, Breakpoint>;
   gap?: number;
 };
 
-const getActiveSetting = (breakpoints?: Record<number, Breakpoint>): Breakpoint => {
-  if (typeof window === 'undefined' || !breakpoints) {
+const getActiveSetting = (
+  breakpoints?: Record<number, Breakpoint>,
+): Breakpoint => {
+  if (typeof window === "undefined" || !breakpoints) {
     return { slidesPerView: 1, slidesPerGroup: 1 };
   }
 
@@ -32,8 +34,16 @@ const getActiveSetting = (breakpoints?: Record<number, Breakpoint>): Breakpoint 
   return active;
 };
 
-const Carousel = ({ items, loop = false, delay = 4000, breakpoints, gap = 0 }: CarouselProps) => {
-  const [setting, setSetting] = useState<Breakpoint>(() => getActiveSetting(breakpoints));
+const Carousel = ({
+  items,
+  loop = false,
+  delay = 4000,
+  breakpoints,
+  gap = 0,
+}: CarouselProps) => {
+  const [setting, setSetting] = useState<Breakpoint>(() =>
+    getActiveSetting(breakpoints),
+  );
   const isTransitionRef = useRef(false);
 
   const { slidesPerView, slidesPerGroup } = setting;
@@ -44,9 +54,13 @@ const Carousel = ({ items, loop = false, delay = 4000, breakpoints, gap = 0 }: C
     items.length < slidesPerView
       ? items.map((item, i) => ({ item, key: `real-${i}` }))
       : [
-          ...items.slice(-slidesPerView).map((item, i) => ({ item, key: `clone-prev-${i}` })),
+          ...items
+            .slice(-slidesPerView)
+            .map((item, i) => ({ item, key: `clone-prev-${i}` })),
           ...items.map((item, i) => ({ item, key: `real-${i}` })),
-          ...items.slice(0, slidesPerView).map((item, i) => ({ item, key: `clone-next-${i}` })),
+          ...items
+            .slice(0, slidesPerView)
+            .map((item, i) => ({ item, key: `clone-next-${i}` })),
         ];
 
   const totalGap = gap * (slidesPerView - 1);
@@ -65,7 +79,8 @@ const Carousel = ({ items, loop = false, delay = 4000, breakpoints, gap = 0 }: C
         const realIdx = prev - slidesPerView;
         if (direction > 0) {
           if (realIdx >= lastPageRealIdx) return slidesPerView + items.length;
-          if (realIdx + slidesPerGroup >= lastPageRealIdx) return slidesPerView + lastPageRealIdx;
+          if (realIdx + slidesPerGroup >= lastPageRealIdx)
+            return slidesPerView + lastPageRealIdx;
           return prev + slidesPerGroup;
         } else {
           if (realIdx <= 0) return slidesPerView - 1;
@@ -89,9 +104,9 @@ const Carousel = ({ items, loop = false, delay = 4000, breakpoints, gap = 0 }: C
       clearTimeout(timer);
       timer = setTimeout(() => setSetting(getActiveSetting(breakpoints)), 300);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [breakpoints]);
 
   useEffect(() => {
@@ -117,14 +132,15 @@ const Carousel = ({ items, loop = false, delay = 4000, breakpoints, gap = 0 }: C
   // items가 slidesPerView보다 작으면 루프 or 이동 없이 그냥 렌더링
   if (items.length <= slidesPerView) {
     return (
-      <div style={{ overflow: 'hidden', width: '100%', position: 'relative' }}>
-        <div style={{ display: 'flex', gap: `${gap}px` }}>
+      <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
+        <div style={{ display: "flex", gap: `${gap}px` }}>
           {items.map((item, index) => (
             <div
               key={index}
               style={{
                 flex: `0 0 calc((100% - ${gap * (slidesPerView - 1)}px) / ${slidesPerView})`,
-              }}>
+              }}
+            >
               {item}
             </div>
           ))}
@@ -134,37 +150,41 @@ const Carousel = ({ items, loop = false, delay = 4000, breakpoints, gap = 0 }: C
   }
 
   return (
-    <div style={{ overflow: 'hidden', width: '100%', position: 'relative' }}>
+    <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
       <div
         style={{
-          display: 'flex',
+          display: "flex",
           gap: `${gap}px`,
           transform: transform,
           transition: isTransitionRef.current
             ? `transform ${TRANSITION_DURATION}ms ease-in-out`
-            : 'none',
-        }}>
+            : "none",
+        }}
+      >
         {extendedItems.map(({ item, key }) => (
           <div
             key={key}
             style={{
               flex: `0 0 calc((100% - ${gap * (slidesPerView - 1)}px) / ${slidesPerView})`,
-            }}>
+            }}
+          >
             {item}
           </div>
         ))}
       </div>
       <button
-        className='arrow arrow-left'
+        className="arrow arrow-left"
         onClick={() => moveCarousel(-1)}
-        aria-label='이전 슬라이드'>
-        {'<'}
+        aria-label="이전 슬라이드"
+      >
+        {"<"}
       </button>
       <button
-        className='arrow arrow-right'
+        className="arrow arrow-right"
         onClick={() => moveCarousel(1)}
-        aria-label='다음 슬라이드'>
-        {'>'}
+        aria-label="다음 슬라이드"
+      >
+        {">"}
       </button>
     </div>
   );

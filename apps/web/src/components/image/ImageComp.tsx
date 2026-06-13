@@ -1,5 +1,5 @@
-import noImg from '@assets/images/no-img.png';
-import { useEffect, useState } from 'react';
+import noImg from "@assets/images/no-img.png";
+import { useEffect, useState } from "react";
 
 type ImageCompProps = {
   src: string;
@@ -9,7 +9,7 @@ type ImageCompProps = {
 
 // TODO fallback, retry, prefetch 추가 필요
 const ImageComp = ({ src, alt, className }: ImageCompProps) => {
-  const [imageSrc, setImageSrc] = useState<string>('');
+  const [imageSrc, setImageSrc] = useState<string>("");
 
   useEffect(() => {
     const image = new Image();
@@ -24,7 +24,7 @@ const ImageComp = ({ src, alt, className }: ImageCompProps) => {
   }, [src]);
 
   if (!imageSrc) {
-    return <div className='skeleton card-poster-skeleton' />;
+    return <div className="skeleton card-poster-skeleton" />;
   }
 
   return <img src={imageSrc} alt={alt} className={className} />;

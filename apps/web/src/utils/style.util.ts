@@ -1,34 +1,34 @@
 const GENRE_PATTERNS: string[] = [
-  'waves',
-  'curves',
-  'shards',
-  'curves',
-  'leaves',
-  'triangles',
-  'diamonds',
-  'shards',
-  'circle',
-  'hills',
-  'leaves',
-  'circles',
-  'wave2',
-  'stripes',
-  'stripes2',
-  'mountain',
-  'circle',
-  'triangles',
-  'wave2',
-  'leaves',
-  'curves',
-  'checker',
-  'checker',
-  'checker',
-  'wave2',
-  'shards',
-  'stripes2',
-  'arrows',
-  'mountain',
-  'leaves',
+  "waves",
+  "curves",
+  "shards",
+  "curves",
+  "leaves",
+  "triangles",
+  "diamonds",
+  "shards",
+  "circle",
+  "hills",
+  "leaves",
+  "circles",
+  "wave2",
+  "stripes",
+  "stripes2",
+  "mountain",
+  "circle",
+  "triangles",
+  "wave2",
+  "leaves",
+  "curves",
+  "checker",
+  "checker",
+  "checker",
+  "wave2",
+  "shards",
+  "stripes2",
+  "arrows",
+  "mountain",
+  "leaves",
 ];
 
 export const generateDynamicStyle = (index: number) => {
@@ -46,8 +46,8 @@ export const generateDynamicStyle = (index: number) => {
 
 // SVG 패턴 생성기
 export const getPattern = (pattern: string, bg: string): string => {
-  const light = 'rgba(255,255,255,0.18)';
-  const dark = 'rgba(0,0,0,0.18)';
+  const light = "rgba(255,255,255,0.18)";
+  const dark = "rgba(0,0,0,0.18)";
 
   const patterns: Record<string, string> = {
     waves: `
@@ -143,7 +143,10 @@ export const getPattern = (pattern: string, bg: string): string => {
 
 export const getPatterBackGround = (index: number) => {
   const { backgroundColor } = generateDynamicStyle(index);
-  const backgroundImage = getPattern(GENRE_PATTERNS[index % 30], backgroundColor);
+  const backgroundImage = getPattern(
+    GENRE_PATTERNS[index % 30],
+    backgroundColor,
+  );
 
   return { backgroundColor, backgroundImage };
-}
+};

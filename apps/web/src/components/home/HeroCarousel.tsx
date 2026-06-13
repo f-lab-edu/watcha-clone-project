@@ -1,38 +1,41 @@
-import StaticRequest from '@api/dto/staticRequest';
-import { nowPlayingQueryOptions } from '@api/hooks/movieQueries';
-import Carousel from '@components/Carousel/Carousel';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { Link } from 'react-router';
+import StaticRequest from "@api/dto/staticRequest";
+import { nowPlayingQueryOptions } from "@api/hooks/movieQueries";
+import Carousel from "@components/Carousel/Carousel";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link } from "react-router";
 
 const HeroCarousel = () => {
-  const { data: heroData } = useSuspenseQuery(nowPlayingQueryOptions(StaticRequest.baseRequest));
+  const { data: heroData } = useSuspenseQuery(
+    nowPlayingQueryOptions(StaticRequest.baseRequest),
+  );
   const contents = heroData.results ?? [];
 
   return (
-    <div className='carousel-section'>
-      <div className='carousel-outer'>
+    <div className="carousel-section">
+      <div className="carousel-outer">
         <Carousel
           loop={true}
           items={contents.map((content, index) => (
             <Link
-              to={`/contents/${content.title ? 'movie' : 'tv'}/${content.id}`}
-              style={{ cursor: 'pointer' }}>
-              <div className='hero'>
+              to={`/contents/${content.title ? "movie" : "tv"}/${content.id}`}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="hero">
                 {/* TODO ImageComp로 교체 필요 */}
                 <img
                   src={`https://image.tmdb.org/t/p/w1280${content.backdrop_path}`}
-                  className='hero-img'
+                  className="hero-img"
                   alt={`hero-img-${content.title ? content.title : content.name}`}
-                  fetchPriority={index === 0 ? 'high' : 'auto'}
-                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  loading={index === 0 ? "eager" : "lazy"}
                 />
-                <div className='hero-overlay'>
-                  <div className='hero-content'>
-                    <h1 className='hero-title'>{content.title}</h1>
-                    <p className='hero-desc'>{content.overview}</p>
-                    <button className='hero-btn'>시청하기</button>
+                <div className="hero-overlay">
+                  <div className="hero-content">
+                    <h1 className="hero-title">{content.title}</h1>
+                    <p className="hero-desc">{content.overview}</p>
+                    <button className="hero-btn">시청하기</button>
                   </div>
-                  <div className='hero-counter'>
+                  <div className="hero-counter">
                     {index + 1} / {contents.length}
                   </div>
                 </div>

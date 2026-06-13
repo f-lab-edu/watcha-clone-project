@@ -1,4 +1,5 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import "./Carousel.css";
 
 const TRANSITION_DURATION = 300;
 

@@ -1,0 +1,14 @@
+{
+  "extends": "@watcha/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
+      "@api/*": ["src/api/*"],
+      "@useHooks/*": ["src/api/hooks/*"],
+      "@assets/*": ["src/assets/*"]
+    }
+  },
+  "include": ["src", "global.d.ts"]
+}

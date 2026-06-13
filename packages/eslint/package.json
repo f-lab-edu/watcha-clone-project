@@ -12,6 +12,9 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1"    
   },
+  "devDependencies": {
+    "eslint": "^9.39.4"
+  },
   "peerDependencies": {
     "eslint": "^9.39.4"
   }

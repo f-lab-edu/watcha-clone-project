@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build",
+    "build:dev": "turbo build:dev",
+    "build:prod": "turbo build:prod",
     "typecheck": "turbo typecheck",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix"

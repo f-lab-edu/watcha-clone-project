@@ -3,8 +3,11 @@ import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
   return {
+    build: {
+      sourcemap: mode !== "production",
+    },
     plugins: [
       react(),
       babel({ presets: [reactCompilerPreset()] }),

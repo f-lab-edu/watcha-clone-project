@@ -1,7 +1,7 @@
 import StaticRequest from "@api/dto/staticRequest";
 import { nowPlayingQueryOptions } from "@api/hooks/movieQueries";
-import Carousel from "@components/Carousel/Carousel";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import Carousel from "@watcha/ui/Carousel";
 import { Link } from "react-router";
 
 const HeroCarousel = () => {
@@ -18,6 +18,7 @@ const HeroCarousel = () => {
           items={contents.map((content, index) => (
             <Link
               to={`/contents/${content.title ? "movie" : "tv"}/${content.id}`}
+              key={`hero-carousel-${content.id}`}
               style={{ cursor: "pointer" }}
             >
               <div className="hero">

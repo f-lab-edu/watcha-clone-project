@@ -1,4 +1,4 @@
-import Carousel from "@components/Carousel/Carousel";
+import Carousel from "@watcha/ui/Carousel";
 import { Link } from "react-router";
 import { Genre } from "src/types/content";
 import { getPatterBackGround } from "src/utils/style.util";
@@ -24,7 +24,10 @@ const GenreCarousel = ({
       }}
       gap={10}
       items={items.map((g) => (
-        <Link to={`/tag?ids=${g.id}&type=${type}`}>
+        <Link
+          to={`/tag?ids=${g.id}&type=${type}`}
+          key={`genre-${g.id}-${type}`}
+        >
           <div key={g.id} className="sp-genre-card">
             <div
               className="sp-genre-bg"

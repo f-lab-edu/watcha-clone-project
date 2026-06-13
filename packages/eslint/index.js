@@ -1,18 +1,21 @@
 import js from "@eslint/js";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import { defineConfig } from "eslint/config";
+import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 
-export default [
-  {ignores: ["dist/**", "node_modules/**"]},
-  js.configs.recommended,
+export default defineConfig([
+  { ignores: ["dist/**", "node_modules/**"] },
   {
     files: ["**/*.{ts,tsx}"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactPlugin.configs.flat.recommended,
+    ],
     languageOptions: {
-      parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
@@ -20,29 +23,18 @@ export default [
       },
     },
     plugins: {
-      "@typescript-eslint": tsPlugin,
-      react: reactPlugin,
       "react-hooks": reactHooksPlugin,
       prettier: prettierPlugin,
     },
     rules: {
-      // TypeScript
-      ...tsPlugin.configs.recommended.rules,
-
-      // React
-      ...reactPlugin.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
-      
-      // React Hooks
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-
-      // Prettier
-      ...prettierConfig.rules,
       "prettier/prettier": "error",
     },
     settings: {
       react: { version: "detect" },
     },
   },
-];
+  prettierConfig,
+]);

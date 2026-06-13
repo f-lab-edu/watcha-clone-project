@@ -1,7 +1,7 @@
-import babel from '@rolldown/plugin-babel';
-import react, { reactCompilerPreset } from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import babel from "@rolldown/plugin-babel";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(() => {
   return {
@@ -14,11 +14,11 @@ export default defineConfig(() => {
       port: 4000,
       open: true,
       proxy: {
-        '/api': {
-          target: 'https://api.themoviedb.org',
+        "/api": {
+          target: "https://api.themoviedb.org",
           changeOrigin: true,
           secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
     },

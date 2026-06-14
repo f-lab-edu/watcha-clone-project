@@ -14,9 +14,9 @@ importers:
 
   apps/web:
     dependencies:
-      '@fontsource/noto-sans-kr':
-        specifier: ^5.2.9
-        version: 5.2.9
+      '@fontsource-variable/noto-sans-kr':
+        specifier: ^5.2.10
+        version: 5.2.10
       '@tanstack/react-query':
         specifier: ^5.91.3
         version: 5.101.0(react@19.2.7)
@@ -422,8 +422,8 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@fontsource/noto-sans-kr@5.2.9':
-    resolution: {integrity: sha512-pbF8F0rUzKkDmnk/KYGAbxjgW4TrIHdFKnV6OQ+kUC9ELCn5utrAURcEgMqq3J9SRX+FvjOz+aBCmfcC8/r7cw==}
+  '@fontsource-variable/noto-sans-kr@5.2.10':
+    resolution: {integrity: sha512-UZOO7HF44Rt5+7SCeFMHYVgbKu36Jet6IxrAd7jjEkQMVDmeefwd0H8V5pSZydvBOOxClk3V5cQsujJqGHhQMw==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -2397,7 +2397,7 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@fontsource/noto-sans-kr@5.2.9': {}
+  '@fontsource-variable/noto-sans-kr@5.2.10': {}
 
   '@humanfs/core@0.19.2':
     dependencies:

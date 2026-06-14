@@ -5,7 +5,7 @@ import RelatedTab from "@components/content/detail/RelatedContentSection";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Activity, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getBackgroundImage, getImageUrl } from "src/utils/image.util";
+import { getImageUrl } from "src/utils/image.util";
 import { getRunningTimeToString } from "src/utils/time.util";
 
 import { tvDetailQueryOptions } from "@api/hooks/videoQueries";
@@ -24,13 +24,6 @@ type ContentTabValue = (typeof CONTENT_TAB_TYPE)[keyof typeof CONTENT_TAB_TYPE];
 
 const ContentDetail = () => {
   const { id, mediaType } = useParams();
-  if (
-    !id ||
-    Number.isNaN(Number(id)) ||
-    (mediaType !== "movie" && mediaType !== "tv")
-  ) {
-    return <NotFound type="ERROR" />;
-  }
 
   const { data } = useSuspenseQuery(
     mediaType === "movie"
@@ -56,16 +49,27 @@ const ContentDetail = () => {
     setTab(CONTENT_TAB_TYPE.INFO);
   }, [id]);
 
+  if (
+    !id ||
+    Number.isNaN(Number(id)) ||
+    (mediaType !== "movie" && mediaType !== "tv")
+  ) {
+    return <NotFound type="ERROR" />;
+  }
+
   return (
     <div className="page">
       {/* 히어로 */}
       {data && (
         <div className="detail-hero">
-          <div
+          <img
             className="detail-hero-bg"
-            style={{
-              backgroundImage: getBackgroundImage(data.backdrop_path, "w500"),
-            }}
+            src={`https://image.tmdb.org/t/p/w500${data.backdrop_path}`}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
           />
           <div className="detail-hero-grad" />
           <div className="detail-hero-inner">

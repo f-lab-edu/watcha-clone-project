@@ -2,9 +2,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
 
 import { ModalProvider } from "@components/modal/ModalContext";
-import "@fontsource/noto-sans-kr/400.css";
-import "@fontsource/noto-sans-kr/700.css";
-import "@fontsource/noto-sans-kr/900.css";
+// 가변 폰트: 서브셋 1세트로 100~900 전 weight 커버 → 폰트 요청 수 약 1/3로 감소
+import "@fontsource-variable/noto-sans-kr";
 import { OverlayProvider } from "overlay-kit";
 import Router from "./router";
 

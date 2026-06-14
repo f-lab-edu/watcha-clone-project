@@ -5,7 +5,7 @@ import RelatedTab from "@components/content/detail/RelatedContentSection";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Activity, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getBackgroundImage, getImageUrl } from "src/utils/image.util";
+import { getImageUrl } from "src/utils/image.util";
 import { getRunningTimeToString } from "src/utils/time.util";
 
 import { tvDetailQueryOptions } from "@api/hooks/videoQueries";
@@ -62,11 +62,14 @@ const ContentDetail = () => {
       {/* 히어로 */}
       {data && (
         <div className="detail-hero">
-          <div
+          <img
             className="detail-hero-bg"
-            style={{
-              backgroundImage: getBackgroundImage(data.backdrop_path, "w500"),
-            }}
+            src={`https://image.tmdb.org/t/p/w500${data.backdrop_path}`}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
           />
           <div className="detail-hero-grad" />
           <div className="detail-hero-inner">

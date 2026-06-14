@@ -24,13 +24,6 @@ type ContentTabValue = (typeof CONTENT_TAB_TYPE)[keyof typeof CONTENT_TAB_TYPE];
 
 const ContentDetail = () => {
   const { id, mediaType } = useParams();
-  if (
-    !id ||
-    Number.isNaN(Number(id)) ||
-    (mediaType !== "movie" && mediaType !== "tv")
-  ) {
-    return <NotFound type="ERROR" />;
-  }
 
   const { data } = useSuspenseQuery(
     mediaType === "movie"
@@ -55,6 +48,14 @@ const ContentDetail = () => {
   useEffect(() => {
     setTab(CONTENT_TAB_TYPE.INFO);
   }, [id]);
+
+  if (
+    !id ||
+    Number.isNaN(Number(id)) ||
+    (mediaType !== "movie" && mediaType !== "tv")
+  ) {
+    return <NotFound type="ERROR" />;
+  }
 
   return (
     <div className="page">

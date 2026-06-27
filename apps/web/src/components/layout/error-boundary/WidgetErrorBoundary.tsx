@@ -7,6 +7,7 @@ import DefaultWidgetErrorFallback from "./ui/DefaultWidgetErrorFallback";
 interface ErrorBoundaryProps extends PropsWithChildren {
   FallbackComponent?: (props: FallbackProps) => ReactNode;
   onReset?: () => void;
+  resetKeys?: unknown[];
 }
 
 interface ErrorBoundaryState {
@@ -24,6 +25,18 @@ class CustomErrorBoundary extends Component<
     return { hasError: true, error };
   }
 
+  componentDidUpdate(prevProps: ErrorBoundaryProps) {
+    if (
+      this.state.hasError &&
+      this.hadResetKeysChanged(
+        prevProps.resetKeys || [],
+        this.props.resetKeys || [],
+      )
+    ) {
+      this.resetErrorBoundary();
+    }
+  }
+
   // 에러 로깅 용도
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("ErrorBoundary caught an error", error, errorInfo);
@@ -34,6 +47,18 @@ class CustomErrorBoundary extends Component<
     this.props.onReset?.();
     this.setState({ hasError: false, error: null });
   };
+
+  private hadResetKeysChanged(prevKeys: unknown[], nextKeys: unknown[]) {
+    if (prevKeys === nextKeys) {
+      return false;
+    }
+
+    if (!prevKeys || !nextKeys || prevKeys.length !== nextKeys.length) {
+      return true;
+    }
+
+    return prevKeys.some((key, index) => !Object.is(key, nextKeys[index]));
+  }
 
   render() {
     const { hasError, error } = this.state;

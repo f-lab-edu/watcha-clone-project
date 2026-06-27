@@ -1,8 +1,11 @@
+import { PropsWithChildren, useEffect } from "react";
+
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import { useEffect } from "react";
-import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { useLocation, useNavigate } from "react-router";
+
+import BaseErrorBoundary from "./BaseErrorBoundary";
+import { FallbackProps } from "./types/fallbackProps";
 
 const UnknownErrorPage = ({ onRetry }: { onRetry: () => void }) => (
   <div className="nf-root">
@@ -66,7 +69,6 @@ const NetworkErrorPage = ({
 const GlobalErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { reset } = useQueryErrorResetBoundary();
 
   useEffect(() => {
     if (isAxiosError(error) && error.response?.status === 401) {
@@ -77,11 +79,6 @@ const GlobalErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
       });
     }
   }, [error, navigate, location, resetErrorBoundary]);
-
-  const handleRetry = () => {
-    reset();
-    resetErrorBoundary();
-  };
 
   if (isAxiosError(error)) {
     const status = error.response?.status;
@@ -107,17 +104,15 @@ const GlobalErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
     );
   }
 
-  return <UnknownErrorPage onRetry={handleRetry} />;
+  return <UnknownErrorPage onRetry={resetErrorBoundary} />;
 };
 
-export const GlobalErrorBoundary = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const GlobalErrorBoundary = ({ children }: PropsWithChildren) => {
+  const { reset } = useQueryErrorResetBoundary();
+
   return (
-    <ErrorBoundary FallbackComponent={GlobalErrorFallback}>
+    <BaseErrorBoundary FallbackComponent={GlobalErrorFallback} onReset={reset}>
       {children}
-    </ErrorBoundary>
+    </BaseErrorBoundary>
   );
 };

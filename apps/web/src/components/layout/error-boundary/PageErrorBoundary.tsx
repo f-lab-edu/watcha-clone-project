@@ -1,24 +1,13 @@
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
-import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+import { PropsWithChildren } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-const DefaultPageErrorFallback = ({
-  error,
-  resetErrorBoundary,
-}: FallbackProps) => {
+import BaseErrorBoundary from "./BaseErrorBoundary";
+import { isAuthError } from "./errorBoundaryUtil";
+import { FallbackProps } from "./types/fallbackProps";
+
+const DefaultPageErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
   const navigate = useNavigate();
-  const { reset } = useQueryErrorResetBoundary();
-
-  if (isAxiosError(error)) {
-    const status = error.response?.status;
-    if (status === 401 || status === 403) throw error;
-  }
-
-  const handleReset = () => {
-    reset();
-    resetErrorBoundary();
-  };
 
   return (
     <div className="nf-root">
@@ -30,7 +19,7 @@ const DefaultPageErrorFallback = ({
       </p>
 
       <div className="nf-buttons">
-        <button className="nf-btn-primary" onClick={handleReset}>
+        <button className="nf-btn-primary" onClick={resetErrorBoundary}>
           다시 시도
         </button>
         <button className="nf-btn-secondary" onClick={() => navigate("/")}>
@@ -41,21 +30,19 @@ const DefaultPageErrorFallback = ({
   );
 };
 
-const PageErrorBoundary = ({ children }: React.PropsWithChildren) => {
+const PageErrorBoundary = ({ children }: PropsWithChildren) => {
   const { reset } = useQueryErrorResetBoundary();
   const { pathname } = useLocation();
+
   return (
-    <ErrorBoundary
+    <BaseErrorBoundary
       FallbackComponent={DefaultPageErrorFallback}
+      shouldRethrow={isAuthError}
       resetKeys={[pathname]}
-      onReset={(details) => {
-        if (details.reason === "keys") {
-          reset();
-        }
-      }}
+      onReset={reset}
     >
       {children}
-    </ErrorBoundary>
+    </BaseErrorBoundary>
   );
 };
 

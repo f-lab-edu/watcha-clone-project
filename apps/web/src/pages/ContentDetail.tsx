@@ -190,7 +190,7 @@ const ContentDetail = () => {
             mode={tab === CONTENT_TAB_TYPE.RELATED ? "visible" : "hidden"}
           >
             <Suspense fallback={<ListSkeleton />}>
-              <WidgetErrorBoundary>
+              <WidgetErrorBoundary resetKeys={[data.id, mediaType]}>
                 <RelatedTab movieId={data.id} type={mediaType} />
               </WidgetErrorBoundary>
             </Suspense>

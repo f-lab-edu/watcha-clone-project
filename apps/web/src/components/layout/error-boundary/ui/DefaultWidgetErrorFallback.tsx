@@ -1,0 +1,30 @@
+import { FallbackProps } from "../types/fallbackProps";
+
+const DefaultWidgetErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
+  return (
+    <div className="w-full h-full pt-[1rem] gap-[1rem] min-h-[120px] flex flex-col items-center justify-center gap-3">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="rgba(255,255,255,0.3)"
+        strokeWidth="3"
+        strokeLinecap="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+
+      <p className="text-white/40 text-[1rem] font-normal tracking-[0.01em] m-0">
+        일시적인 오류로 불러오지 못했습니다.
+      </p>
+
+      <button onClick={resetErrorBoundary} className="btn-watch">
+        다시 시도
+      </button>
+    </div>
+  );
+};
+export default DefaultWidgetErrorFallback;

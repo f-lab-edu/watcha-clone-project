@@ -108,10 +108,10 @@ const Search = () => {
           </div>
         ) : (
           <div className="sp-fade">
-            {/* 인기 검색어 */}
-            <TodayTrend />
-            {/* 비디오 장르 */}
             <WidgetErrorBoundary>
+              {/* 인기 검색어 */}
+              <TodayTrend />
+              {/* 비디오 장르 */}
               <Suspense fallback={<ListSkeleton />}>
                 <GenreSection />
               </Suspense>

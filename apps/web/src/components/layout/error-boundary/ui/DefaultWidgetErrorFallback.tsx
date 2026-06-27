@@ -1,18 +1,13 @@
-import { useQueryErrorResetBoundary } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
 import { FallbackProps } from "../types/fallbackProps";
 
-const DefaultWidgetErrorFallback = ({ error }: FallbackProps) => {
-  const { reset } = useQueryErrorResetBoundary();
-
-  if (isAxiosError(error)) {
-    const status = error.response?.status;
-    if (status === 401 || status === 403) throw error; // ← Global로 bubble up
-  }
-
-  const handleReset = () => {
-    reset();
-  };
+const DefaultWidgetErrorFallback = ({
+  error,
+  resetErrorBoundary,
+}: FallbackProps) => {
+  // if (isAxiosError(error)) {
+  //   const status = error.response?.status;
+  //   if (status === 401 || status === 403) throw error; // ← Global로 bubble up
+  // }
 
   return (
     <div className="w-full h-full pt-[1rem] gap-[1rem] min-h-[120px] flex flex-col items-center justify-center gap-3">
@@ -34,7 +29,7 @@ const DefaultWidgetErrorFallback = ({ error }: FallbackProps) => {
         일시적인 오류로 불러오지 못했습니다.
       </p>
 
-      <button onClick={handleReset} className="btn-watch">
+      <button onClick={resetErrorBoundary} className="btn-watch">
         다시 시도
       </button>
     </div>

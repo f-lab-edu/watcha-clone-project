@@ -1,11 +1,12 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
 
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { FallbackProps } from "./types/fallbackProps";
 import DefaultWidgetErrorFallback from "./ui/DefaultWidgetErrorFallback";
 
-interface ErrorBoundaryProps {
+interface ErrorBoundaryProps extends PropsWithChildren {
   FallbackComponent?: (props: FallbackProps) => ReactNode;
-  children: ReactNode;
+  onReset?: () => void;
 }
 
 interface ErrorBoundaryState {
@@ -13,7 +14,7 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-class WidgetErrorBoundary extends Component<
+class CustomErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
@@ -28,15 +29,27 @@ class WidgetErrorBoundary extends Component<
     console.error("ErrorBoundary caught an error", error, errorInfo);
   }
 
+  // 화살표 함수로 정의하여 this 바인딩 문제를 해결
+  resetErrorBoundary = () => {
+    this.props.onReset?.();
+    this.setState({ hasError: false, error: null });
+  };
+
   render() {
     const { hasError, error } = this.state;
     const { FallbackComponent, children } = this.props;
 
     if (hasError && error) {
       return FallbackComponent ? (
-        <FallbackComponent error={error} />
+        <FallbackComponent
+          error={error}
+          resetErrorBoundary={this.resetErrorBoundary}
+        />
       ) : (
-        <DefaultWidgetErrorFallback error={error} />
+        <DefaultWidgetErrorFallback
+          error={error}
+          resetErrorBoundary={this.resetErrorBoundary}
+        />
       );
     }
 
@@ -44,4 +57,8 @@ class WidgetErrorBoundary extends Component<
   }
 }
 
+const WidgetErrorBoundary = (props: Omit<ErrorBoundaryProps, "onReset">) => {
+  const { reset } = useQueryErrorResetBoundary();
+  return <CustomErrorBoundary onReset={reset} {...props} />;
+};
 export default WidgetErrorBoundary;

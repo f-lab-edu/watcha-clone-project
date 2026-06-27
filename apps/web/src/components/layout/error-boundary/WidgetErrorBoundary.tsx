@@ -1,6 +1,7 @@
 import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
 
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
 import { FallbackProps } from "./types/fallbackProps";
 import DefaultWidgetErrorFallback from "./ui/DefaultWidgetErrorFallback";
 
@@ -65,14 +66,17 @@ class CustomErrorBoundary extends Component<
     const { FallbackComponent, children } = this.props;
 
     if (hasError && error) {
+      if (isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status === 401 || status === 403) {
+          throw error; // 글로벌로 전달
+        }
+      }
+
       return FallbackComponent ? (
-        <FallbackComponent
-          error={error}
-          resetErrorBoundary={this.resetErrorBoundary}
-        />
+        <FallbackComponent resetErrorBoundary={this.resetErrorBoundary} />
       ) : (
         <DefaultWidgetErrorFallback
-          error={error}
           resetErrorBoundary={this.resetErrorBoundary}
         />
       );

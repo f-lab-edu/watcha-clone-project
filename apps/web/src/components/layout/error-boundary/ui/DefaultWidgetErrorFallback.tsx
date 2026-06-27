@@ -1,14 +1,6 @@
 import { FallbackProps } from "../types/fallbackProps";
 
-const DefaultWidgetErrorFallback = ({
-  error,
-  resetErrorBoundary,
-}: FallbackProps) => {
-  // if (isAxiosError(error)) {
-  //   const status = error.response?.status;
-  //   if (status === 401 || status === 403) throw error; // ← Global로 bubble up
-  // }
-
+const DefaultWidgetErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
   return (
     <div className="w-full h-full pt-[1rem] gap-[1rem] min-h-[120px] flex flex-col items-center justify-center gap-3">
       <svg

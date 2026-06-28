@@ -24,7 +24,7 @@ const RelatedTab = ({
       {relatedData.results
         .filter((m) => m.backdrop_path)
         .map((m) => (
-          <Link to={`/contents/${m.title ? "movie" : "tv"}/${m.id}`}>
+          <Link to={`/contents/${m.title ? "movie" : "tv"}/${m.id}`} key={m.id}>
             <CardPoster
               key={`${m.id}`}
               img={getImageUrl(m.poster_path, "w300")}

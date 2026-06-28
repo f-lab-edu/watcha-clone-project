@@ -1,59 +1,42 @@
 import StaticRequest from "@api/dto/staticRequest";
 import { movieDetailQueryOptions } from "@api/hooks/movieQueries";
-import ContentInfoTab from "@components/content/ContentInfoTab";
-import RelatedTab from "@components/content/detail/RelatedContentSection";
+import { tvDetailQueryOptions } from "@api/hooks/videoQueries";
+import ContentDetailTabs from "@components/content/detail/ContentDetailTabs";
+import ImageComp from "@components/image/ImageComp";
+import { useModal } from "@components/modal/ModalContext";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Activity, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router";
+import {
+  CONTENT_TAB_TYPE,
+  ContentDetailTabProvider,
+} from "src/context/ContentDetailTabContext";
 import { getImageUrl } from "src/utils/image.util";
 import { getRunningTimeToString } from "src/utils/time.util";
 
-import { tvDetailQueryOptions } from "@api/hooks/videoQueries";
-import ImageComp from "@components/image/ImageComp";
-import WidgetErrorBoundary from "@components/layout/error-boundary/WidgetErrorBoundary";
-import { useModal } from "@components/modal/ModalContext";
-import ListSkeleton from "@components/skeleton/ListSkeleton";
 import NotFound from "./NotFound";
-
-const CONTENT_TAB_TYPE = {
-  INFO: "콘텐츠 정보",
-  RELATED: "관련 콘텐츠",
-} as const;
-
-type ContentTabValue = (typeof CONTENT_TAB_TYPE)[keyof typeof CONTENT_TAB_TYPE];
 
 const ContentDetail = () => {
   const { id, mediaType } = useParams();
+  const contentType =
+    mediaType === "movie" || mediaType === "tv" ? mediaType : null;
+  const isValid = !!id && !Number.isNaN(Number(id)) && !!contentType;
+  const safeId = isValid ? Number(id) : -1;
 
   const { data } = useSuspenseQuery(
-    mediaType === "movie"
-      ? movieDetailQueryOptions(
-          Number.isNaN(id) ? -1 : Number(id),
-          StaticRequest.baseRequest,
-        )
-      : tvDetailQueryOptions(
-          Number.isNaN(id) ? -1 : Number(id),
-          StaticRequest.baseRequest,
-        ),
+    contentType === "movie"
+      ? movieDetailQueryOptions(safeId, StaticRequest.baseRequest)
+      : tvDetailQueryOptions(safeId, StaticRequest.baseRequest),
   );
 
   const { openModal } = useModal();
-  const [tab, setTab] = useState<ContentTabValue>(CONTENT_TAB_TYPE.INFO);
+
   const handleModal = () =>
     openModal({
       title: "왓챠를 시작해보세요",
       desc: "로그인이 필요해요",
     });
 
-  useEffect(() => {
-    setTab(CONTENT_TAB_TYPE.INFO);
-  }, [id]);
-
-  if (
-    !id ||
-    Number.isNaN(Number(id)) ||
-    (mediaType !== "movie" && mediaType !== "tv")
-  ) {
+  if (!isValid) {
     return <NotFound type="ERROR" />;
   }
 
@@ -75,8 +58,8 @@ const ContentDetail = () => {
           <div className="detail-hero-inner">
             {/* 왼쪽 */}
             <div className="detail-left">
-              <h1>{mediaType === "movie" ? data.title : data.name}</h1>
-              {mediaType === "movie" ? (
+              <h1>{contentType === "movie" ? data.title : data.name}</h1>
+              {contentType === "movie" ? (
                 <div className="detail-badge-row">
                   <span className="detail-age-badge">
                     {data.release_dates.results?.find(
@@ -167,36 +150,12 @@ const ContentDetail = () => {
         </div>
       )}
 
-      {/* 탭 */}
-      <div className="detail-tabs">
-        {[CONTENT_TAB_TYPE.INFO, CONTENT_TAB_TYPE.RELATED].map((t) => (
-          <button
-            key={t}
-            className={`detail-tab ${tab === t ? "active" : ""}`}
-            onClick={() => setTab(t)}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
-
-      {/* 탭 콘텐츠 */}
-      {data.id && (
-        <div className="tab-content">
-          <Activity mode={tab === CONTENT_TAB_TYPE.INFO ? "visible" : "hidden"}>
-            <ContentInfoTab credits={data.credits ?? []} />
-          </Activity>
-          <Activity
-            mode={tab === CONTENT_TAB_TYPE.RELATED ? "visible" : "hidden"}
-          >
-            <Suspense fallback={<ListSkeleton />}>
-              <WidgetErrorBoundary resetKeys={[data.id, mediaType]}>
-                <RelatedTab movieId={data.id} type={mediaType} />
-              </WidgetErrorBoundary>
-            </Suspense>
-          </Activity>
-        </div>
-      )}
+      <ContentDetailTabProvider
+        key={data.id}
+        initialTab={CONTENT_TAB_TYPE.INFO}
+      >
+        <ContentDetailTabs data={data} mediaType={contentType} />
+      </ContentDetailTabProvider>
     </div>
   );
 };

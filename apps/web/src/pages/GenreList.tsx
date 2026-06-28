@@ -9,11 +9,7 @@ const GenreList = () => {
   const navigate = useNavigate();
   const { type } = useParams();
 
-  const {
-    data: genresData,
-    isPending,
-    isFetching,
-  } = useSuspenseQuery(
+  const { data: genresData } = useSuspenseQuery(
     genresQueryOptions(type as "movie" | "tv", StaticRequest.baseRequest),
   );
 
@@ -29,7 +25,7 @@ const GenreList = () => {
           <div
             key={`${type}-${g.id}`}
             className="ga-card"
-            // onClick={() => navigate(`/search?genre=${genre.label}`)}
+            onClick={() => navigate(`/tag?ids=${g.id}&type=${type}`)}
           >
             <div
               className="ga-card-bg"
